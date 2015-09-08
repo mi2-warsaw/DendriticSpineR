@@ -1,0 +1,8 @@
+Package: DendriticSpineR
+Title: Tools for playing with Dendritic Spine Data
+Version: 0.1.0
+Authors@R: person("Przemyslaw", "Biecek", , "przemyslaw.biecek@gmail.com", role = c("aut", "cre"))
+Description: Tools for playing with Dendritic Spine Data
+Depends: R (>= 3.2.0)
+License: What license is it under?
+LazyData: true
