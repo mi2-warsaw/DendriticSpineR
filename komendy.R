@@ -12,10 +12,11 @@ library(openxlsx)
 library(scales)
 library(stringi)
 library(tidyr)
+library(pbkrtest)
 
 library(DendriticSpineR)
 
-setwd("H:\\R\\dentryty\\przyklady danych i raportow")
+setwd("H:\\R\\dendryty\\przyklady danych i raportow")
 
 file <- "zebrane.csv"
 file <- "MMP-9 KO&TG.xlsx"
@@ -23,13 +24,15 @@ file <- "MMP-9 KO&TG.xlsx"
 animal_col_name <- "Animal"
 group_col_name <- "Group"
 spines_col_name <- "spine_number"
+analysis_col_name <- "length" #c("length","foot")
 
 spines <- read_spines(file, animal_col_name=animal_col_name,
-                      group_col_name=group_col_name, spines_col_name=spines_col_name)
+                      group_col_name=group_col_name, spines_col_name=spines_col_name,
+                      analysis_col_name=analysis_col_name)
 
 summary(spines)
 
-plot_ecdf(spines$length, spines$Group, TRUE) +
+plot_ecdf(c(spines$length,spines$foot), spines$Group, TRUE) +
   coord_cartesian(xlim=c(0,2)) + xlab("length")
 
 plot_ecdf(spines$length, spines$Group, FALSE)+

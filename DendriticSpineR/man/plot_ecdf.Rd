@@ -4,17 +4,22 @@
 \alias{plot_ecdf}
 \title{Distribution of spines}
 \usage{
-plot_ecdf(spines, group, ecdf = TRUE)
+plot_ecdf(spines, group, ecdf=TRUE)
 }
 \arguments{
 \item{spines}{a vector with spine properties (length, area etc)}
 
-\item{group}{a vector with grouping variable}
+\item{group}{a vector with grouping variable/s}
 
-\item{ecdf}{if TRUE then cumulative density function is plotted, if FALSE then density function is plotted}
+\item{ecdf}{if TRUE then cumulative density function is plotted,
+if FALSE then density function is plotted}
+}
+\value{
+a (cumulative) density function plot
 }
 \description{
-This function plots a distribution (both density function and cumulative density function)
-for dendritic spines grouped by one or more grouping variables.
+Function \code{plot_ecdf} plots a distribution (both density function
+and cumulative density function) for dendritic spines grouped by one
+or more grouping variables.
 }
 

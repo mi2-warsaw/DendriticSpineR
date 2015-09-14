@@ -30,11 +30,11 @@ default: c("Photo_ID_abs","Photo_ID_rel")}
 
 \item{spines_col_name}{a name of column with spines' numbers}
 
-\item{analysis_col_name}{a name/names of column/s with elements of
+\item{analysis_col_name}{a name/names of column/s with properties of
 dendritic spine which will be analysed; default c("length")}
 }
 \value{
-data.frame of spines class
+a data.frame of spines class
 }
 \description{
 Function \code{read_spines} loads data from the indicated file.
