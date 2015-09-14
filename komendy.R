@@ -23,9 +23,11 @@ file <- "MMP-9 KO&TG.xlsx"
 animal_col_name <- "Animal"
 group_col_name <- "Group"
 spines_col_name <- "spine_number"
+analysis_col_name <- c("length", "length_width_ratio")
 
 spines <- read_spines(file, animal_col_name=animal_col_name,
-                      group_col_name=group_col_name, spines_col_name=spines_col_name)
+                      group_col_name=group_col_name, spines_col_name=spines_col_name,
+                      analysis_col_name = analysis_col_name)
 
 summary(spines)
 
