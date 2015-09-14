@@ -5,10 +5,16 @@
 #'
 #' @usage summary(spines)
 #'
-#' @param spines a data.frame
+#' @param spines a data.frame of spines class
 #'
 #' @return invisible NULL
 #'
+#' @export
+
+summary <- function(spines){
+  UseMethod("summary")
+}
+
 #' @export
 
 summary.spines <- function(spines){

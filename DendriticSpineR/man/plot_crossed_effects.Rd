@@ -4,30 +4,35 @@
 \alias{plot_crossed_effects}
 \title{Function plots crossed effects}
 \usage{
-plot_crossed_effects(data, var, trans = I, inv = I, f1 = "group",
-  f2 = "condition", strat = "Animal", mixed = TRUE, addpoints = FALSE)
+plot_crossed_effects(data, var, trans=I, inv=I,
+   f1="group", f2="condition", strat="Animal", mixed=TRUE,
+   addpoints=FALSE)
 }
 \arguments{
-\item{data}{data.frame with data}
+\item{data}{a data.frame with data}
 
-\item{var}{variable of interest}
+\item{var}{a variable of interest}
 
-\item{trans}{transformation of the var variable before ANOVA}
+\item{trans}{a transformation of the var variable before ANOVA}
 
-\item{inv}{inverse transformation of the trans(var)}
+\item{inv}{an inverse transformation of the trans(var)}
 
 \item{f1}{first effect}
 
 \item{f2}{second effect}
 
-\item{strat}{stratification (Animal)}
+\item{strat}{a stratification (Animal)}
 
 \item{mixed}{if TRUE a mixed model is applied, if FALSE it's just standard linear regression}
 
 \item{addpoints}{if TRUE additional points for each f1/f2/strat group will be added}
 }
+\value{
+a crossed effects plot
+}
 \description{
-Function calculates averages and sd's (with the use of fixed or mixed models) and plots them.
+Function \code{plot_crossed_effects} calculates averages and sd's
+(with the use of fixed or mixed models) and plots them.
 It is assumed that there are two crossed effects.
 }
 

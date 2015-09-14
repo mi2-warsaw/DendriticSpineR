@@ -32,10 +32,10 @@
 #' @param photo_col_name a name/names of column/s with photos;
 #' default: c("Photo_ID_abs","Photo_ID_rel")
 #' @param spines_col_name a name of column with spines' numbers
-#' @param analysis_col_name a name/names of column/s with elements of
+#' @param analysis_col_name a name/names of column/s with properties of
 #' dendritic spine which will be analysed; default c("length")
 #'
-#' @return data.frame of spines class
+#' @return a data.frame of spines class
 #'
 #' @import stringi openxlsx
 #'
@@ -44,7 +44,6 @@
 read_spines <- function(file, sep=";", header=TRUE, sheet=1, animal_col_name, group_col_name,
                        photo_col_name=c("Photo_ID_abs","Photo_ID_rel"), spines_col_name,
                        analysis_col_name=c("length")){
-
   stopifnot(is.character(file), is.character(sep), is.logical(header), is.numeric(sheet), sheet%%1 == 0,
             is.character(animal_col_name), length(animal_col_name) > 0, is.character(group_col_name),
             length(group_col_name) > 0, is.character(photo_col_name), length(photo_col_name) > 0,
