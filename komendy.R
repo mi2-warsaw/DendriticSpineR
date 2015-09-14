@@ -15,8 +15,10 @@ library(tidyr)
 
 library(DendriticSpineR)
 
-file <- "H:\\R\\dentryty\\przyklady danych i raportow\\zebrane.csv"
-file <- "H:\\R\\dentryty\\przyklady danych i raportow\\MMP-9 KO&TG.xlsx"
+setwd("H:\\R\\dentryty\\przyklady danych i raportow")
+
+file <- "zebrane.csv"
+file <- "MMP-9 KO&TG.xlsx"
 
 animal_col_name <- "Animal"
 group_col_name <- "Group"
@@ -24,6 +26,8 @@ spines_col_name <- "spine_number"
 
 spines <- read_spines(file, animal_col_name=animal_col_name,
                       group_col_name=group_col_name, spines_col_name=spines_col_name)
+
+summary(spines)
 
 plot_ecdf(spines$length, spines$Group, TRUE) +
   coord_cartesian(xlim=c(0,2)) + xlab("length")
