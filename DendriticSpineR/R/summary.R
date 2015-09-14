@@ -32,11 +32,11 @@ summary.spines <- function(spines){
 #       print(info)
 #     } else
 
-    if(!is.integer(column) && is.numeric(column)){
+    if(is.numeric(column) && !all(column%%1 == 0)){
       cat(paste0("\n", i, ". column - ", col_names[i], ":\n\n"))
       info <- summary(column)
       print(info)
-    } else if(is.factor(column)) {
+    } else if(is.factor(column) || is.character(column)) {
       cat(paste0("\n", i, ". column - ", col_names[i], ":\n\n"))
       cat("Appearance of elements:\n")
       info <- summary.factor(column)
@@ -50,8 +50,3 @@ summary.spines <- function(spines){
 
   return(invisible(NULL))
 }
-
-
-# summary(spines)
-# summary(spines$group_col)
-# summary(spines$length)
