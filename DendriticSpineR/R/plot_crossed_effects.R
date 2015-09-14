@@ -19,11 +19,11 @@
 #'
 #' @export
 
-plot_crossed_effects <- function(data, var, trans = I, inv = I, f1="group", f2="condition", 
+plot_crossed_effects <- function(data, var, trans = I, inv = I, f1="group", f2="condition",
                                  strat = "Animal", mixed=TRUE, addpoints=FALSE) {
   ndata <- data
   ndata[,var] <- trans(data[,var])
-  
+
   if (mixed) {
     form <- as.formula(paste0(var, " ~ ", f1, ":", f2, "-1 + (1|",strat,")"))
     ss <- summary(lmer(form, ndata))$coef[,1:2]
@@ -44,10 +44,10 @@ plot_crossed_effects <- function(data, var, trans = I, inv = I, f1="group", f2="
     geom_errorbar(width=0.1, position=position_dodge(width=0.2)) +
     geom_point(size=5, position=position_dodge(width=0.2)) +
     theme_bw() + ylab(var)
-  
+
   if (addpoints) {
     fdata <- ndata
-    if (length(grep(strat, pattern = ":")) > 0) 
+    if (length(grep(strat, pattern = ":")) > 0)
       stop("the strat argument cannot contain ':' when ppoints are added")
     fdata$fake_var <- fdata[,var]
     fdata$fake_f1 <- fdata[,f1]
@@ -56,7 +56,7 @@ plot_crossed_effects <- function(data, var, trans = I, inv = I, f1="group", f2="
     fpoints <- fdata %>%
       group_by(fake_f1,fake_f2,fake_strat) %>%
       summarise(meds = inv(mean(fake_var)))
-    pl <- pl + 
+    pl <- pl +
       geom_point(data=fpoints, aes(x=fake_f1, color=fake_f2, y=meds, ymin=meds, ymax=meds))
   }
 
