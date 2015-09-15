@@ -12,7 +12,7 @@
 #'
 #' @export
 
-plot_distribution <- function(data, var, f1="Group", strat = "Animal", box = FALSE) {
+plot_distribution <- function(data, var, f1 = "Group", strat = "Animal", box = FALSE) {
   if (box) {
     data$ng <- factor(paste(data[,f1], data[,strat]))
     data$ng <- reorder(data$ng, data[,var], median, na.rm=TRUE)

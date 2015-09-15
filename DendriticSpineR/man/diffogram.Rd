@@ -4,13 +4,13 @@
 \alias{diffogram}
 \title{A diffogram for lsmeans}
 \usage{
-diffogram(lsmodel, logt=FALSE)
+diffogram(lsmodel, logt = FALSE)
 }
 \arguments{
 \item{lsmodel}{an object from lsmeans function}
 
 \item{logt}{a logical value indicating whether there is the reponse after
-log transformation}
+log transformation; default: FALSE}
 }
 \value{
 a diffogram plot

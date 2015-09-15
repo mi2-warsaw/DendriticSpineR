@@ -4,10 +4,10 @@
 \alias{read_spines}
 \title{Proper loading data}
 \usage{
-read_spines(file, sep=";", header=TRUE, sheet=1,
+read_spines(file, sep = ";", header = TRUE, sheet = 1,
   animal_col_name, group_col_name,
-  photo_col_name=c("Photo_ID_abs","Photo_ID_rel"),
-  spines_col_name, properties_col_name=c("length"))
+  photo_col_name = c("Photo_ID_abs", "Photo_ID_rel"),
+  spines_col_name, properties_col_name = c("length"))
 }
 \arguments{
 \item{file}{a file's path that will be loaded}
@@ -26,7 +26,7 @@ default: 1}
 \item{group_col_name}{a name of column with group}
 
 \item{photo_col_name}{a name/names of column/s with photos;
-default: c("Photo_ID_abs","Photo_ID_rel")}
+default: c("Photo_ID_abs", "Photo_ID_rel")}
 
 \item{spines_col_name}{a name of column with spines' numbers}
 

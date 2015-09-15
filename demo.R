@@ -7,6 +7,7 @@
 
 library(DendriticSpineR)
 library(ggplot2)
+library(scales)
 
 ## 2. Set a folder with working direction
 

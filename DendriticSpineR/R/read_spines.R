@@ -15,10 +15,10 @@
 #' will be added by \code{read_spines} function and it
 #' will be used by plotting functions.
 #'
-#' @usage read_spines(file, sep=";", header=TRUE, sheet=1,
+#' @usage read_spines(file, sep = ";", header = TRUE, sheet = 1,
 #'   animal_col_name, group_col_name,
-#'   photo_col_name=c("Photo_ID_abs","Photo_ID_rel"),
-#'   spines_col_name, properties_col_name=c("length"))
+#'   photo_col_name = c("Photo_ID_abs", "Photo_ID_rel"),
+#'   spines_col_name, properties_col_name = c("length"))
 #'
 #' @param file a file's path that will be loaded
 #' @param sep a field separator character; default: ";"
@@ -30,7 +30,7 @@
 #' @param animal_col_name a name of column with animal
 #' @param group_col_name a name of column with group
 #' @param photo_col_name a name/names of column/s with photos;
-#' default: c("Photo_ID_abs","Photo_ID_rel")
+#' default: c("Photo_ID_abs", "Photo_ID_rel")
 #' @param spines_col_name a name of column with spines' numbers
 #' @param properties_col_name a name/names of column/s with properties of
 #' dendritic spine which will be analysed; default c("length")
@@ -41,9 +41,9 @@
 #'
 #' @export
 
-read_spines <- function(file, sep=";", header=TRUE, sheet=1, animal_col_name, group_col_name,
-                       photo_col_name=c("Photo_ID_abs","Photo_ID_rel"), spines_col_name,
-                       properties_col_name=c("length")){
+read_spines <- function(file, sep = ";", header = TRUE, sheet = 1, animal_col_name, group_col_name,
+                       photo_col_name = c("Photo_ID_abs", "Photo_ID_rel"), spines_col_name,
+                       properties_col_name = c("length")){
   stopifnot(is.character(file), is.character(sep), is.logical(header), is.numeric(sheet), sheet%%1 == 0,
             is.character(animal_col_name), length(animal_col_name) == 1, is.character(group_col_name),
             length(group_col_name) == 1, is.character(photo_col_name), length(photo_col_name) > 0,
@@ -75,12 +75,16 @@ read_spines <- function(file, sep=";", header=TRUE, sheet=1, animal_col_name, gr
   } else if(!(group_col_name %in% col_names)){
     stop(paste0("There is not any column in spines data called ", group_col_name, "."))
   } else if(!all(photo_col_name %in% col_names)){
-    photo_col <- paste0(photo_col_name, collapse = " or ")
+    if(length(photo_col_name) > 1){
+      photo_col <- paste0(photo_col_name, collapse = " or ")
+    }
     stop(paste0("There is not any column in spines data called ", photo_col, "."))
   } else if(!all(spines_col_name %in% col_names)){
     stop(paste0("There is not any column in spines data called ", spines_col_name, "."))
   } else if(!all(properties_col_name %in% col_names)){
-    properties_col <- paste0(properties_col_name, collapse = " or ")
+    if(length(properties_col_name) > 1){
+      properties_col <- paste0(properties_col_name, collapse = " or ")
+    }
     stop(paste0("There is not any column in spines data called ", properties_col, "."))
   }
 

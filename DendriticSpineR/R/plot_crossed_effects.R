@@ -4,19 +4,21 @@
 #' (with the use of fixed or mixed models) and plots them.
 #' It is assumed that there are two crossed effects.
 #'
-#' @usage plot_crossed_effects(data, var, trans=I, inv=I,
-#'    f1="group", f2="condition", strat="Animal", mixed=TRUE,
-#'    addpoints=FALSE)
+#' @usage plot_crossed_effects(data, var, trans = I, inv = I,
+#'    f1 = "group", f2 = "condition", strat = "Animal", mixed = TRUE,
+#'    addpoints = FALSE)
 #'
 #' @param data a data.frame with data
 #' @param var a variable of interest
-#' @param trans a transformation of the var variable before ANOVA
-#' @param inv an inverse transformation of the trans(var)
-#' @param f1 first effect
-#' @param f2 second effect
-#' @param strat a stratification (Animal)
-#' @param mixed if TRUE a mixed model is applied, if FALSE it's just standard linear regression
-#' @param addpoints if TRUE additional points for each f1/f2/strat group will be added
+#' @param trans a transformation of the var variable before ANOVA; default: I
+#' @param inv an inverse transformation of the trans(var); default: I
+#' @param f1 first effect; default: "group"
+#' @param f2 second effect; default: "condition"
+#' @param strat a stratification (Animal); default: "Animal"
+#' @param mixed if TRUE a mixed model is applied, if FALSE it's just standard
+#' linear regression; default: TRUE
+#' @param addpoints if TRUE additional points for each f1/f2/strat group
+#' will be added; default: FALSE
 #'
 #' @return a crossed effects plot
 #'
@@ -26,8 +28,8 @@
 #'
 #' @export
 
-plot_crossed_effects <- function(data, var, trans = I, inv = I, f1="group", f2="condition",
-                                 strat = "Animal", mixed=TRUE, addpoints=FALSE){
+plot_crossed_effects <- function(data, var, trans = I, inv = I, f1 = "group", f2 = "condition",
+                                 strat = "Animal", mixed = TRUE, addpoints = FALSE){
   stopifnot(is.data.frame(data), is.character(var), is.function(trans), is.function(inv),
             is.character(f1), is.character(f2), is.character(strat), is.logical(mixed), is.logical(addpoints))
   ndata <- data

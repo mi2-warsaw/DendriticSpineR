@@ -4,12 +4,12 @@
 \alias{plot_ecdf}
 \title{Distribution of spines}
 \usage{
-plot_ecdf(spines, group, ecdf=TRUE)
+plot_ecdf(spines, properties = "length", ecdf = TRUE)
 }
 \arguments{
-\item{spines}{a vector with spine properties (length, area etc)}
+\item{spines}{a data.frame of spines class}
 
-\item{group}{a vector with grouping variable/s}
+\item{properties}{a vector with properties variable/s}
 
 \item{ecdf}{if TRUE then cumulative density function is plotted,
 if FALSE then density function is plotted}

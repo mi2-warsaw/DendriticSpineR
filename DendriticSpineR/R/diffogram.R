@@ -7,11 +7,11 @@
 #' ,,Interpreting the Differences Among LSMEANS in Generalized Linear Models''
 #' http://www.mwsug.org/proceedings/2011/dataviz/MWSUG-2011-DG08.pdf
 #'
-#' @usage diffogram(lsmodel, logt=FALSE)
+#' @usage diffogram(lsmodel, logt = FALSE)
 #'
 #' @param lsmodel an object from lsmeans function
 #' @param logt a logical value indicating whether there is the reponse after
-#' log transformation
+#' log transformation; default: FALSE
 #'
 #' @return a diffogram plot
 #'
@@ -27,7 +27,7 @@
 
 #' @export
 
-diffogram <- function(lsmodel, logt=FALSE){
+diffogram <- function(lsmodel, logt = FALSE){
   stopifnot(is(lsmodel, "lsm.list"), is.logical(logt))
   # effects
   tmp1 <- confint(lsmodel$lsmeans)

@@ -32,11 +32,23 @@ spines <- read_spines(file, animal_col_name=animal_col_name,
 
 summary(spines)
 
-plot_ecdf(c(spines$length,spines$foot), spines$Group, TRUE) +
+plot_ecdf(spines, "length", TRUE) +
   coord_cartesian(xlim=c(0,2)) + xlab("length")
 
-plot_ecdf(spines$length, spines$Group, FALSE)+
+plot_ecdf(spines, "length", FALSE) +
   coord_cartesian(xlim=c(0,2)) + xlab("length")
+
+plot_ecdf(spines, c("length","foot"), TRUE) +
+  coord_cartesian(xlim=c(0,2)) + xlab("length + foot")
+
+plot_ecdf(spines, c("length","foot"), FALSE) +
+  coord_cartesian(xlim=c(0,2)) + xlab("length + foot")
+
+# plot_ecdf(c(spines$length,spines$foot), spines$Group, TRUE) +
+#   coord_cartesian(xlim=c(0,2)) + xlab("length")
+#
+# plot_ecdf(spines$length, spines$Group, FALSE)+
+#   coord_cartesian(xlim=c(0,2)) + xlab("length")
 
 plot_crossed_effects(spines, var = "length",
                      trans = log, inv = exp,

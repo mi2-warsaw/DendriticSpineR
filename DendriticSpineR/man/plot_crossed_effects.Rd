@@ -4,28 +4,30 @@
 \alias{plot_crossed_effects}
 \title{Function plots crossed effects}
 \usage{
-plot_crossed_effects(data, var, trans=I, inv=I,
-   f1="group", f2="condition", strat="Animal", mixed=TRUE,
-   addpoints=FALSE)
+plot_crossed_effects(data, var, trans = I, inv = I,
+   f1 = "group", f2 = "condition", strat = "Animal", mixed = TRUE,
+   addpoints = FALSE)
 }
 \arguments{
 \item{data}{a data.frame with data}
 
 \item{var}{a variable of interest}
 
-\item{trans}{a transformation of the var variable before ANOVA}
+\item{trans}{a transformation of the var variable before ANOVA; default: I}
 
-\item{inv}{an inverse transformation of the trans(var)}
+\item{inv}{an inverse transformation of the trans(var); default: I}
 
-\item{f1}{first effect}
+\item{f1}{first effect; default: "group"}
 
-\item{f2}{second effect}
+\item{f2}{second effect; default: "condition"}
 
-\item{strat}{a stratification (Animal)}
+\item{strat}{a stratification (Animal); default: "Animal"}
 
-\item{mixed}{if TRUE a mixed model is applied, if FALSE it's just standard linear regression}
+\item{mixed}{if TRUE a mixed model is applied, if FALSE it's just standard
+linear regression; default: TRUE}
 
-\item{addpoints}{if TRUE additional points for each f1/f2/strat group will be added}
+\item{addpoints}{if TRUE additional points for each f1/f2/strat group
+will be added; default: FALSE}
 }
 \value{
 a crossed effects plot
