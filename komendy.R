@@ -24,11 +24,11 @@ file <- "MMP-9 KO&TG.xlsx"
 animal_col_name <- "Animal"
 group_col_name <- "Group"
 spines_col_name <- "spine_number"
-analysis_col_name <- "length" #c("length","foot")
+properties_col_name <- "length" #c("length","foot")
 
 spines <- read_spines(file, animal_col_name=animal_col_name,
                       group_col_name=group_col_name, spines_col_name=spines_col_name,
-                      analysis_col_name=analysis_col_name)
+                      properties_col_name=properties_col_name)
 
 summary(spines)
 
@@ -38,7 +38,7 @@ plot_ecdf(c(spines$length,spines$foot), spines$Group, TRUE) +
 plot_ecdf(spines$length, spines$Group, FALSE)+
   coord_cartesian(xlim=c(0,2)) + xlab("length")
 
-plot_crossed_effects(spines, "length",
+plot_crossed_effects(spines, var = "length",
                      trans = log, inv = exp,
                      f1="group", f2="condition", strat = "Animal:group",
                      mixed = TRUE)

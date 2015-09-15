@@ -7,7 +7,7 @@
 read_spines(file, sep=";", header=TRUE, sheet=1,
   animal_col_name, group_col_name,
   photo_col_name=c("Photo_ID_abs","Photo_ID_rel"),
-  spines_col_name, analysis_col_name=c("length"))
+  spines_col_name, properties_col_name=c("length"))
 }
 \arguments{
 \item{file}{a file's path that will be loaded}
@@ -30,7 +30,7 @@ default: c("Photo_ID_abs","Photo_ID_rel")}
 
 \item{spines_col_name}{a name of column with spines' numbers}
 
-\item{analysis_col_name}{a name/names of column/s with properties of
+\item{properties_col_name}{a name/names of column/s with properties of
 dendritic spine which will be analysed; default c("length")}
 }
 \value{

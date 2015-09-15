@@ -25,34 +25,52 @@ summary.spines <- function(spines){
   #information about Animal
   cat(paste0("\n1. column - ", col_names[1], ":\n\n"))
   column <- spines[, 1]
-  info <- c(range(column),length(unique(column)))
-  names(info) <- c("Min.", "Max.", "Unique")
+  info <- c(length(unique(column)),table(column))
+  names_info <- paste0(col_names[1], " ", names(info), ":")
+  names_info[1] <- "Unique:"
+  info <- matrix(info, ncol = 1, dimnames = list(names_info, "Appearance"))
   print(info)
 
-  #rest of summary
-  for(i in seq_len(length(col_names))){
-    column <- spines[, i]
-#     if(is.integer(column)){
-#       info <- c(range(column),length(unique(column)))
-#       names(info) <- c("Min.", "Max.", "Unique")
-#       print(info)
-#     } else
+  #information about Group
+  cat(paste0("\n2. column - ", col_names[2], ":\n\n"))
+  column <- spines[, 2]
+  cat("Appearance of elements:\n")
+  info <- summary.factor(column)
+  print(info)
 
+  #information about group and condition
+  cat(paste0("\n3-4. columns - ", col_names[3], ", ", col_names[4], ":\n\n"))
+  column <- spines[, 3:4]
+  cat("Appearance of elements:\n")
+  info <- table(column)
+  if(any(colnames(info) == "x")){
+    warning(paste0("Some records in '", col_names[2], "' column were without condition!\n",
+                   "  These conditions were set at 'x' during reading data file."))
+  }
+  print(info)
+
+  #information about properties
+  n <- ncol(spines)
+  j <- 1
+  properties_nr_columns <- numeric(n)
+  for(i in seq_len(n)){
+    column <- spines[, i]
     if(is.numeric(column) && !all(column%%1 == 0)){
-      cat(paste0("\n", i, ". column - ", col_names[i], ":\n\n"))
-      info <- summary(column)
-      print(info)
-    } else if(is.factor(column) || is.character(column)) {
-      cat(paste0("\n", i, ". column - ", col_names[i], ":\n\n"))
-      cat("Appearance of elements:\n")
-      info <- summary.factor(column)
-      if(any(names(info) == "x")){
-        warning(paste0("Some records in '", col_names[2], "' column were without condition!\n",
-                       "  These conditions were set at 'x' during reading data file."))
-      }
-      print(info)
+      properties_nr_columns[j] <- i
+      j <- j + 1
     }
   }
+  properties_columns <- properties_nr_columns[which(properties_nr_columns > 0)]
+  column <- spines[, properties_columns]
+  properties_col <- paste0(properties_columns, collapse = "-")
+  if(length(properties_columns) == 1){
+    cat(paste0("\n", properties_col, ". column - ", col_names[properties_columns],":\n\n"))
+    info <- summary(column)
+  } else {
+    cat(paste0("\n", properties_col, ". columns - properties:\n\n"))
+    info <- summary.data.frame(column)
+  }
+  print(info)
 
   return(invisible(NULL))
 }

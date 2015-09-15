@@ -18,7 +18,7 @@
 #' @usage read_spines(file, sep=";", header=TRUE, sheet=1,
 #'   animal_col_name, group_col_name,
 #'   photo_col_name=c("Photo_ID_abs","Photo_ID_rel"),
-#'   spines_col_name, analysis_col_name=c("length"))
+#'   spines_col_name, properties_col_name=c("length"))
 #'
 #' @param file a file's path that will be loaded
 #' @param sep a field separator character; default: ";"
@@ -32,7 +32,7 @@
 #' @param photo_col_name a name/names of column/s with photos;
 #' default: c("Photo_ID_abs","Photo_ID_rel")
 #' @param spines_col_name a name of column with spines' numbers
-#' @param analysis_col_name a name/names of column/s with properties of
+#' @param properties_col_name a name/names of column/s with properties of
 #' dendritic spine which will be analysed; default c("length")
 #'
 #' @return a data.frame of spines class
@@ -43,12 +43,12 @@
 
 read_spines <- function(file, sep=";", header=TRUE, sheet=1, animal_col_name, group_col_name,
                        photo_col_name=c("Photo_ID_abs","Photo_ID_rel"), spines_col_name,
-                       analysis_col_name=c("length")){
+                       properties_col_name=c("length")){
   stopifnot(is.character(file), is.character(sep), is.logical(header), is.numeric(sheet), sheet%%1 == 0,
-            is.character(animal_col_name), length(animal_col_name) > 0, is.character(group_col_name),
-            length(group_col_name) > 0, is.character(photo_col_name), length(photo_col_name) > 0,
-            is.character(spines_col_name), length(spines_col_name) > 0, is.character(analysis_col_name),
-            length(analysis_col_name) > 0)
+            is.character(animal_col_name), length(animal_col_name) == 1, is.character(group_col_name),
+            length(group_col_name) == 1, is.character(photo_col_name), length(photo_col_name) > 0,
+            is.character(spines_col_name), length(spines_col_name) == 1, is.character(properties_col_name),
+            length(properties_col_name) > 0)
 
   #checking group_col_name to wrong pattern
   if(group_col_name == "group"){
@@ -66,6 +66,22 @@ read_spines <- function(file, sep=";", header=TRUE, sheet=1, animal_col_name, gr
     spines <- read.table(file, sep=sep, header=header)
   } else {
     stop("Wrong type of file (*.csv, *.xlsx)!")
+  }
+
+  #checking columns' names
+  col_names <- colnames(spines)
+  if(!(animal_col_name %in% col_names)){
+    stop(paste0("There is not any column in spines data called ", animal_col_name, "."))
+  } else if(!(group_col_name %in% col_names)){
+    stop(paste0("There is not any column in spines data called ", group_col_name, "."))
+  } else if(!all(photo_col_name %in% col_names)){
+    photo_col <- paste0(photo_col_name, collapse = " or ")
+    stop(paste0("There is not any column in spines data called ", photo_col, "."))
+  } else if(!all(spines_col_name %in% col_names)){
+    stop(paste0("There is not any column in spines data called ", spines_col_name, "."))
+  } else if(!all(properties_col_name %in% col_names)){
+    properties_col <- paste0(properties_col_name, collapse = " or ")
+    stop(paste0("There is not any column in spines data called ", properties_col, "."))
   }
 
   #spliting Group column into two columns with group and condition information
@@ -103,13 +119,13 @@ read_spines <- function(file, sep=";", header=TRUE, sheet=1, animal_col_name, gr
     col_nr_photo[i] <- which(col_names == photo_col_name[i])
   }
   col_nr_spines <- which(col_names == spines_col_name)
-  length_analysis_col <- length(analysis_col_name)
-  col_nr_analysis <- numeric(length_analysis_col)
-  for(i in seq_len(length(analysis_col_name))){
-    col_nr_analysis[i] <- which(col_names == analysis_col_name[i])
+  length_properties_col <- length(properties_col_name)
+  col_nr_properties <- numeric(length_properties_col)
+  for(i in seq_len(length(properties_col_name))){
+    col_nr_properties[i] <- which(col_names == properties_col_name[i])
   }
   spines <- spines[, c(col_nr_animal, col_nr_Group, col_nr_group, col_nr_condition,
-                       col_nr_photo, col_nr_spines, col_nr_analysis)]
+                       col_nr_photo, col_nr_spines, col_nr_properties)]
 
   #setting class for S3 methods
   class(spines) <- c("spines", "data.frame")
