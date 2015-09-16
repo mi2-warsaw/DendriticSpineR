@@ -5,19 +5,16 @@
 #' It is assumed that there are two crossed effects.
 #'
 #' @usage plot_crossed_effects(data, var, trans = I, inv = I,
-#'    f1 = "group", f2 = "condition", strat = "Animal", mixed = TRUE,
-#'    addpoints = FALSE)
+#'    strat = "Animal", mixed = TRUE, addpoints = FALSE)
 #'
-#' @param data a data.frame with data
-#' @param var a variable of interest
-#' @param trans a transformation of the var variable before ANOVA; default: I
-#' @param inv an inverse transformation of the trans(var); default: I
-#' @param f1 first effect; default: "group"
-#' @param f2 second effect; default: "condition"
+#' @param spines a data.frame of spines class
+#' @param property a variable of interest
+#' @param trans a transformation of the property variable before ANOVA; default: I
+#' @param inv an inverse transformation of the trans(property); default: I
 #' @param strat a stratification (Animal); default: "Animal"
 #' @param mixed if TRUE a mixed model is applied, if FALSE it's just standard
 #' linear regression; default: TRUE
-#' @param addpoints if TRUE additional points for each f1/f2/strat group
+#' @param addpoints if TRUE additional points for each group/condition/strat group
 #' will be added; default: FALSE
 #'
 #' @return a crossed effects plot
@@ -28,12 +25,33 @@
 #'
 #' @export
 
-plot_crossed_effects <- function(data, var, trans = I, inv = I, f1 = "group", f2 = "condition",
-                                 strat = "Animal", mixed = TRUE, addpoints = FALSE){
-  stopifnot(is.data.frame(data), is.character(var), is.function(trans), is.function(inv),
-            is.character(f1), is.character(f2), is.character(strat), is.logical(mixed), is.logical(addpoints))
-  ndata <- data
-  ndata[, var] <- trans(data[, var])
+plot_crossed_effects <- function(spines, property, trans = I, inv = I, strat = "Animal",
+                                 mixed = TRUE, addpoints = FALSE){
+  UseMethod("plot_crossed_effects")
+}
+
+#' @export
+#'
+plot_crossed_effects.spines <- function(spines, property, trans = I, inv = I, strat = "Animal",
+                                 mixed = TRUE, addpoints = FALSE){
+  stopifnot(is.data.frame(spines), is.character(property), is.function(trans), is.function(inv),
+            is.character(strat), is.logical(mixed), is.logical(addpoints))
+
+  if(stri_detect_regex(strat, ":") && mixed == FALSE){
+    stop("Standard linear regression cannot be applied for this stratification! Remove ':'.")
+  } else if(stri_detect_regex(strat, ":") && addpoints == TRUE){
+    stop("Ppoints cannot be added for this stratification! Remove ':'.")
+  }
+
+  ndata <- spines
+  ndata[, property] <- trans(spines[, property])
+  col_names <- colnames(spines)
+  f1 <- col_names[3]
+  f2 <- col_names[4]
+
+  if(length(property) > 1){
+    var <- paste0(property, collapse=" + ")
+  }
 
   if (mixed) {
     form <- as.formula(paste0(var, " ~ ", f1, ":", f2, "-1 + (1|", strat, ")"))
@@ -60,7 +78,7 @@ plot_crossed_effects <- function(data, var, trans = I, inv = I, f1 = "group", f2
     fdata <- ndata
     if (length(grep(strat, pattern = ":")) > 0)
       stop("the strat argument cannot contain ':' when ppoints are added")
-    fdata$fake_var <- fdata[, var]
+    fdata$fake_var <- fdata[, property]
     fdata$fake_f1 <- fdata[, f1]
     fdata$fake_f2 <- fdata[, f2]
     fdata$fake_strat <- fdata[, strat]

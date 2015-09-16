@@ -101,3 +101,47 @@ plot_distributions(spines, "put_here_spines_property", TRUE)
 
 #example
 # plot_distributions(spines, "length", TRUE)
+
+## 9. Drawing crossed effects plot
+
+plot_crossed_effects(spines, property = c("put_here_spines_property", ...),
+                     trans = put_here_transformation,
+                     inv = put_here_inverse_transformation,
+                     strat = "put_here_stratification",
+                     mixed = TRUE, addpoints = FALSE)
+
+#example
+# plot_crossed_effects(spines, property = "length",
+#                      trans = log, inv = exp,
+#                      strat = "Animal",
+#                      mixed = FALSE)
+#
+# plot_crossed_effects(spines, property = c("length","foot"),
+#                      trans = log, inv = exp,
+#                      strat = "Animal:group",
+#                      mixed = TRUE)
+#
+# plot_crossed_effects(spines, property = "length",
+#                      trans = log, inv = exp,
+#                      strat = "Animal",
+#                      mixed = TRUE, addpoints = TRUE)
+
+## 10. Drawing diffogram
+
+col_names <- colnames(spines)
+formula_model <- as.formula(paste0("log(", put_here_spines_property, ") ~ ",
+                                   put_here_Group_column, " + (1|", put_here_Animal_column,
+                                   ":group) + (1|", put_here_Photo_ID_rel_column, ":",
+                                   put_here_Animal_column, ":group)"))
+mixed_model <- lmer(formula_model, data=spines)
+ms <- lsmeans(mixed_model, pairwise~put_here_Group_column, adjust="tukey")
+diffogram(ms)
+
+#example
+# col_names <- colnames(spines)
+# formula_model <- as.formula(paste0("log(", "length", ") ~ ", col_names[2], " + (1|",
+#                                    col_names[1], ":group) + (1|", tail(photo_col_name, 1),
+#                                    ":", col_names[1], ":group)"))
+# mixed_model <- lmer(formula_model, data=spines)
+# ms <- lsmeans(mixed_model, pairwise~Group, adjust="tukey")
+# diffogram(ms)

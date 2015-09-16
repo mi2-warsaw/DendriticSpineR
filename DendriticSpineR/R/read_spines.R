@@ -103,7 +103,7 @@ read_spines <- function(file, sep = ";", header = TRUE, sheet = 1, animal_col_na
   #information if there were some records without condition
   if(flag_warning){
     warning(paste0("Some records in '", group_col_name, "' column were without condition",
-                   "(not uniform pattern)!\n",
+                   " (not uniform pattern)!\n",
                    "  These conditions were set at 'x' during adding columns with group and condition."))
   }
 
