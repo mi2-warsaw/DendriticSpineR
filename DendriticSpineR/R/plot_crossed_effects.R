@@ -49,6 +49,7 @@ plot_crossed_effects.spines <- function(spines, property, trans = I, inv = I, st
   f1 <- col_names[3]
   f2 <- col_names[4]
 
+  var <- property
   if(length(property) > 1){
     var <- paste0(property, collapse=" + ")
   }

@@ -7,7 +7,8 @@
 
 library(DendriticSpineR)
 # library(ggplot2)
-# library(scales)
+library(lme4)
+library(lsmeans)
 
 ## 2. Set a folder with working direction
 
