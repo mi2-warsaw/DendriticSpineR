@@ -44,8 +44,8 @@ summary.spines <- function(spines){
   cat("Appearance of elements:\n")
   info <- table(column)
   if(any(colnames(info) == "x")){
-    warning(paste0("Some records in '", col_names[2], "' column were without condition
-                   (not uniform pattern)!\n",
+    warning(paste0("Some records in '", col_names[2], "' column were without condition",
+                   "(not uniform pattern)!\n",
                    "  These conditions were set at 'x' during reading data file."))
   }
   print(info)

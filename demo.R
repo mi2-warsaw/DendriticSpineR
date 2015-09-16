@@ -6,8 +6,8 @@
 ## 1. Load required packages
 
 library(DendriticSpineR)
-library(ggplot2)
-library(scales)
+# library(ggplot2)
+# library(scales)
 
 ## 2. Set a folder with working direction
 
@@ -79,12 +79,25 @@ plot_ecdf(spines, "put_here_spines_properties", TRUE, c(0, 2))
 
 #a density function plot
 
-plot_ecdf(spines, "put_here_spines_properties", FALSE, c(0, 2))
+plot_ecdf(spines, c("put_here_spines_property", ...), FALSE, c(0, 2))
 
 #example
 # plot_ecdf(spines, "length", FALSE, c(0, 3))
 # plot_ecdf(spines, c("length","foot","head_width"), FALSE, c(0, 3))
 
+## 8. Drawing a plot of distributions
 
+#a panel plot with densities for one property
 
+plot_distributions(spines, "put_here_spines_property", FALSE)
 
+#example
+# plot_distributions(spines)
+# plot_distributions(spines, "length", FALSE)
+
+#a panel plot with boxplots for one property
+
+plot_distributions(spines, "put_here_spines_property", TRUE)
+
+#example
+# plot_distributions(spines, "length", TRUE)

@@ -8,10 +8,11 @@
 #' including chosen by user columns and two new columns - 'group'
 #' and 'condition'. In 'group' column is a group of the animal
 #' and in 'condition' is substance which was used in the study.
-#' If there was only group in group_col_name column, a 'condition'
-#' is setted on 'x', so remember to update data file before
-#' using this function. Also remember to do not use 'group' as
-#' a name for group_col_name column, because 'group' column
+#' If there was only group (pattern like xx, not like xxxx or
+#' xx xx) in group_col_name column, a 'condition' is setted on 'x',
+#' so remember to update data file before using this function.
+#' Also remember to do not use 'group' as a name for
+#' group_col_name column, because 'group' column
 #' will be added by \code{read_spines} function and it
 #' will be used by plotting functions.
 #'
@@ -101,9 +102,9 @@ read_spines <- function(file, sep = ";", header = TRUE, sheet = 1, animal_col_na
 
   #information if there were some records without condition
   if(flag_warning){
-    warning(paste0("Some records in '", group_col_name, "' column were without condition
-                   (not uniform pattern)!\n",
-                    "  These conditions were set at 'x' during adding columns with group and condition."))
+    warning(paste0("Some records in '", group_col_name, "' column were without condition",
+                   "(not uniform pattern)!\n",
+                   "  These conditions were set at 'x' during adding columns with group and condition."))
   }
 
   #adding columns with group and condition

@@ -46,6 +46,10 @@ plot_ecdf(spines, c("length","foot"), FALSE, c(0,3))
 # plot_ecdf(spines$length, spines$Group, FALSE)+
 #   coord_cartesian(xlim=c(0,2)) + xlab("length")
 
+plot_distributions(spines, "length", box = FALSE)
+
+plot_distributions(spines, "length", box = TRUE)
+
 plot_crossed_effects(spines, var = "length",
                      trans = log, inv = exp,
                      f1="group", f2="condition", strat = "Animal:group",
