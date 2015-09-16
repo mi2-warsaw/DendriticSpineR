@@ -22,6 +22,7 @@
 #' @import ggplot2
 #' @import lme4
 #' @import dplyr
+#' @import tidyr
 #' @importFrom stringi stri_detect_regex
 #'
 #' @export

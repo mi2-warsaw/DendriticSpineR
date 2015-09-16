@@ -12,15 +12,6 @@ read_spines(file, sep = ";", header = TRUE, sheet = 1,
 \arguments{
 \item{file}{a file's path that will be loaded}
 
-\item{sep}{a field separator character; default: ";"}
-
-\item{header}{a logical value indicating whether the file
-contains the names of the variables as its first line;
-default: TRUE}
-
-\item{sheet}{a number indicating which sheet from file is needed;
-default: 1}
-
 \item{animal_col_name}{a name of column with animal}
 
 \item{group_col_name}{a name of column with group}
@@ -32,6 +23,15 @@ default: c("Photo_ID_abs", "Photo_ID_rel")}
 
 \item{properties_col_name}{a name/names of column/s with properties of
 dendritic spine which will be analysed; default c("length")}
+
+\item{sep}{a field separator character; default: ";"}
+
+\item{header}{a logical value indicating whether the file
+contains the names of the variables as its first line;
+default: TRUE}
+
+\item{sheet}{a number indicating which sheet from file is needed;
+default: 1}
 }
 \value{
 a data.frame of spines class

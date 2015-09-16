@@ -1,10 +1,10 @@
 #' Distribution of spines
 #'
-#' Function \code{plot_ecdf} plots a distribution (both density function
+#' Function \code{plot_distributions} plots a distribution (both density function
 #' and cumulative density function) for dendritic spines grouped by one
 #' or more grouping variables.
 #'
-#' @usage plot_ecdf(spines, properties = "length", ecdf = TRUE, x_lim = c(0, 2))
+#' @usage plot_distributions(spines, properties = "length", ecdf = TRUE, x_lim = c(0, 2))
 #'
 #' @param spines a data.frame of spines class
 #' @param properties a vector with properties variable/s; default: "length"
@@ -15,16 +15,17 @@
 #' @return a (cumulative) density function plot
 #'
 #' @import scales
+#' @import tidyr
 #'
 #' @export
 
-plot_ecdf <- function(spines, properties = "length", ecdf = TRUE, x_lim = c(0, 2)){
-  UseMethod("plot_ecdf")
+plot_distributions <- function(spines, properties = "length", ecdf = TRUE, x_lim = c(0, 2)){
+  UseMethod("plot_distributions")
 }
 
 #' @export
 
-plot_ecdf.spines <- function(spines, properties = "length", ecdf = TRUE, x_lim = c(0, 2)){
+plot_distributions.spines <- function(spines, properties = "length", ecdf = TRUE, x_lim = c(0, 2)){
   stopifnot(is.data.frame(spines), is.character(properties), is.logical(ecdf),
             is.numeric(x_lim), length(x_lim) == 2)
 

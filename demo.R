@@ -23,6 +23,8 @@ file <- "put_here_a_name_of_file.csv"
 #or
 file <- "put_here_a_name_of_file.xlsx"
 
+file <- "MMP-9 KO&TG.xlsx"
+
 #example
 #file <- "zebrane.csv"
 
@@ -44,11 +46,15 @@ properties_col_name <- c("properties_column_1_name", "properties_column_1_name",
 # group_col_name <- "Group"
 # spines_col_name <- "spine_number"
 # photo_col_name <- "Photo_ID_abs" #it has default value, so you can omit it
-##or
+# #or
 # photo_col_name <- c("Photo_ID_abs", "Photo_ID_rel") #it has default value, so you can omit it
 # properties_col_name <- "length"
-##or
+# #or
 # properties_col_name <- c("length","foot","head_width")
+
+setwd("~/Dropbox/Projekt Nencki/")
+
+file <- "kolce dendrytyczne myszy tg3-gm.csv"
 
 ## 5. Load file with data
 
@@ -56,7 +62,8 @@ spines <- read_spines(file, animal_col_name = animal_col_name,
                       group_col_name = group_col_name,
                       spines_col_name = spines_col_name,
                       photo_col_name = photo_col_name,
-                      properties_col_name = properties_col_name)
+                      properties_col_name = properties_col_name,
+                      header=TRUE, sep=";")
 
 #Remember that in the Group column all elements should have the same pattern. If they do not
 #the "x" will be added to new condition column. For example if there are "ko", "tg", "wt ko",
@@ -72,36 +79,38 @@ summary(spines)
 
 #a cumulative density function plot
 
-plot_ecdf(spines, "put_here_spines_properties", TRUE, c(0, 2))
+plot_distributions(spines, "put_here_spines_properties", TRUE, c(0, 2))
 
 #example
-# plot_ecdf(spines, "length")
-# plot_ecdf(spines, c("length","foot","head_width"), TRUE, c(0, 3))
+plot_distributions(spines, "length")
+plot_distributions(spines, "head_width")
+#plot_distributions(spines, c("length","foot","head_width"), TRUE, c(0, 3))
 
 #a density function plot
 
-plot_ecdf(spines, c("put_here_spines_property", ...), FALSE, c(0, 2))
+plot_distributions(spines, c("put_here_spines_property", ...), FALSE, c(0, 2))
 
 #example
-# plot_ecdf(spines, "length", FALSE, c(0, 3))
-# plot_ecdf(spines, c("length","foot","head_width"), FALSE, c(0, 3))
+plot_distributions(spines, "length", ecdf = FALSE, x_lim = c(0, 3))
+plot_distributions(spines, "head_width", FALSE)
+plot_distributions(spines, c("length","foot","head_width"), FALSE, c(0, 3))
 
 ## 8. Drawing a plot of distributions
 
 #a panel plot with densities for one property
 
-plot_distributions(spines, "put_here_spines_property", FALSE)
+plot_animals(spines, "put_here_spines_property", FALSE)
 
 #example
-# plot_distributions(spines)
-# plot_distributions(spines, "length", FALSE)
+plot_animals(spines)
+plot_animals(spines, "length", FALSE)
 
 #a panel plot with boxplots for one property
 
-plot_distributions(spines, "put_here_spines_property", TRUE)
+plot_animals(spines, "put_here_spines_property", TRUE)
 
 #example
-# plot_distributions(spines, "length", TRUE)
+plot_animals(spines, "length", TRUE)
 
 ## 9. Drawing crossed effects plot
 
@@ -112,20 +121,20 @@ plot_crossed_effects(spines, property = c("put_here_spines_property", ...),
                      mixed = TRUE, addpoints = FALSE)
 
 #example
-# plot_crossed_effects(spines, property = "length",
-#                      trans = log, inv = exp,
-#                      strat = "Animal",
-#                      mixed = FALSE)
+plot_crossed_effects(spines, property = "length",
+                     trans = log, inv = exp,
+                     strat = "Animal",
+                     mixed = FALSE)
 #
-# plot_crossed_effects(spines, property = c("length","foot"),
-#                      trans = log, inv = exp,
-#                      strat = "Animal:group",
-#                      mixed = TRUE)
+plot_crossed_effects(spines, property = c("length","foot"),
+                     trans = log, inv = exp,
+                     strat = "Animal:group",
+                     mixed = TRUE)
 #
-# plot_crossed_effects(spines, property = "length",
-#                      trans = log, inv = exp,
-#                      strat = "Animal",
-#                      mixed = TRUE, addpoints = TRUE)
+plot_crossed_effects(spines, property = "length",
+                     trans = log, inv = exp,
+                     strat = "Animal",
+                     mixed = TRUE, addpoints = TRUE)
 
 ## 10. Drawing diffogram
 

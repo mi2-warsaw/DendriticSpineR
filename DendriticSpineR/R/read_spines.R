@@ -43,10 +43,10 @@
 #'
 #' @export
 
-read_spines <- function(file, sep = ";", header = TRUE, sheet = 1, animal_col_name, group_col_name,
+read_spines <- function(file, animal_col_name, group_col_name,
                        photo_col_name = c("Photo_ID_abs", "Photo_ID_rel"), spines_col_name,
-                       properties_col_name = c("length")){
-  stopifnot(is.character(file), is.character(sep), is.logical(header), is.numeric(sheet), sheet%%1 == 0,
+                       properties_col_name = c("length"), ...){
+  stopifnot(is.character(file), 
             is.character(animal_col_name), length(animal_col_name) == 1, is.character(group_col_name),
             length(group_col_name) == 1, is.character(photo_col_name), length(photo_col_name) > 0,
             is.character(spines_col_name), length(spines_col_name) == 1, is.character(properties_col_name),
@@ -63,9 +63,9 @@ read_spines <- function(file, sep = ";", header = TRUE, sheet = 1, animal_col_na
 
   #reading file
   if(file_type == "xlsx"){
-    spines <- read.xlsx(file, sheet=sheet)
+    spines <- read.xlsx(file, ...)
   } else if(file_type == "csv") {
-    spines <- read.table(file, sep=sep, header=header)
+    spines <- read.table(file, ...)
   } else {
     stop("Wrong type of file (*.csv, *.xlsx)!")
   }
@@ -92,6 +92,8 @@ read_spines <- function(file, sep = ";", header = TRUE, sheet = 1, animal_col_na
 
   #spliting Group column into two columns with group and condition information
   groups <- stri_extract_all_regex(spines[, group_col_name], "\\p{L}{2}")
+  
+  groups <- strsplit(as.character(spines[, group_col_name]), split="[^A-Za-z0-9]")
   length_groups <- length(groups)
   flag_warning <- FALSE
   for(i in seq_len(length_groups)){

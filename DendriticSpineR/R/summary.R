@@ -3,21 +3,17 @@
 #' Function \code{summary} summarises loaded data
 #' by \code{read_spines} function.
 #'
-#' @usage summary(spines)
+#' @usage summary(object, ...)
 #'
-#' @param spines a data.frame of spines class
+#' @param object a data.frame of spines class
+#' @param ... other arguments
 #'
 #' @return invisible NULL
 #'
 #' @export
 
-summary <- function(spines){
-  UseMethod("summary")
-}
-
-#' @export
-
-summary.spines <- function(spines){
+summary.spines <- function(object, ...){
+  spines = object
   stopifnot(is(spines, "spines"), is.data.frame(spines))
   col_names <- colnames(spines)
   cat("Summary of loaded data:\n")

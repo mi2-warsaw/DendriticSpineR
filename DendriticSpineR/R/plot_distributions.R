@@ -1,9 +1,9 @@
 #' Plot of distributions of spines
 #'
-#' Function \code{plot_distributions} plots densities for given variable
+#' Function \code{plot_animals} plots densities for given variable
 #' divided into groups plotted on different panels for different animal
 #'
-#' @usage plot_distributions(spines, property = "length", box = FALSE)
+#' @usage plot_animals(spines, property = "length", box = FALSE)
 #'
 #' @param data a data.frame of spines class
 #' @param property a variable of interest; default: "length"
@@ -16,13 +16,13 @@
 #'
 #' @export
 
-plot_distributions <- function(spines, property = "length", box = FALSE){
-  UseMethod("plot_distributions")
+plot_animals <- function(spines, property = "length", box = FALSE){
+  UseMethod("plot_animals")
 }
 
 #' @export
 
-plot_distributions.spines <- function(spines, property = "length", box = FALSE){
+plot_animals.spines <- function(spines, property = "length", box = FALSE){
   stopifnot(is.data.frame(spines), is.character(property), length(property) == 1,
             is.logical(box))
 
