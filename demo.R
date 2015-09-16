@@ -47,7 +47,7 @@ properties_col_name <- c("properties_column_1_name", "properties_column_1_name",
 # photo_col_name <- c("Photo_ID_abs", "Photo_ID_rel") #it has default value, so you can omit it
 # properties_col_name <- "length"
 ##or
-# properties_col_name <- c("length","foot")
+# properties_col_name <- c("length","foot","head_width")
 
 ## 5. Load file with data
 
@@ -67,5 +67,24 @@ spines <- read_spines(file, animal_col_name = animal_col_name,
 
 summary(spines)
 
-## 7.
+## 7. Drawing a (cumulative) density function plot
+
+#a cumulative density function plot
+
+plot_ecdf(spines, "put_here_spines_properties", TRUE, c(0, 2))
+
+#example
+# plot_ecdf(spines, "length")
+# plot_ecdf(spines, c("length","foot","head_width"), TRUE, c(0, 3))
+
+#a density function plot
+
+plot_ecdf(spines, "put_here_spines_properties", FALSE, c(0, 2))
+
+#example
+# plot_ecdf(spines, "length", FALSE, c(0, 3))
+# plot_ecdf(spines, c("length","foot","head_width"), FALSE, c(0, 3))
+
+
+
 

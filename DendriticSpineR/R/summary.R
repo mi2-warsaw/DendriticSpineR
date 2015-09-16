@@ -44,7 +44,8 @@ summary.spines <- function(spines){
   cat("Appearance of elements:\n")
   info <- table(column)
   if(any(colnames(info) == "x")){
-    warning(paste0("Some records in '", col_names[2], "' column were without condition!\n",
+    warning(paste0("Some records in '", col_names[2], "' column were without condition
+                   (not uniform pattern)!\n",
                    "  These conditions were set at 'x' during reading data file."))
   }
   print(info)
@@ -62,11 +63,11 @@ summary.spines <- function(spines){
   }
   properties_columns <- properties_nr_columns[which(properties_nr_columns > 0)]
   column <- spines[, properties_columns]
-  properties_col <- paste0(properties_columns, collapse = "-")
   if(length(properties_columns) == 1){
-    cat(paste0("\n", properties_col, ". column - ", col_names[properties_columns],":\n\n"))
+    cat(paste0("\n", properties_columns, ". column - ", col_names[properties_columns],":\n\n"))
     info <- summary(column)
   } else {
+    properties_col <- paste0(properties_columns[1], sep = "-", tail(properties_columns, 1))
     cat(paste0("\n", properties_col, ". columns - properties:\n\n"))
     info <- summary.data.frame(column)
   }

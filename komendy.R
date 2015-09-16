@@ -24,7 +24,7 @@ file <- "MMP-9 KO&TG.xlsx"
 animal_col_name <- "Animal"
 group_col_name <- "Group"
 spines_col_name <- "spine_number"
-properties_col_name <- "length" #c("length","foot")
+properties_col_name <- "length" #c("length","foot","head_width")
 
 spines <- read_spines(file, animal_col_name=animal_col_name,
                       group_col_name=group_col_name, spines_col_name=spines_col_name,
@@ -32,17 +32,13 @@ spines <- read_spines(file, animal_col_name=animal_col_name,
 
 summary(spines)
 
-plot_ecdf(spines, "length", TRUE) +
-  coord_cartesian(xlim=c(0,2)) + xlab("length")
+plot_ecdf(spines, "length", TRUE)
 
-plot_ecdf(spines, "length", FALSE) +
-  coord_cartesian(xlim=c(0,2)) + xlab("length")
+plot_ecdf(spines, "length", FALSE)
 
-plot_ecdf(spines, c("length","foot"), TRUE) +
-  coord_cartesian(xlim=c(0,2)) + xlab("length + foot")
+plot_ecdf(spines, c("length","foot","head_width"), TRUE)
 
-plot_ecdf(spines, c("length","foot"), FALSE) +
-  coord_cartesian(xlim=c(0,2)) + xlab("length + foot")
+plot_ecdf(spines, c("length","foot"), FALSE, c(0,3))
 
 # plot_ecdf(c(spines$length,spines$foot), spines$Group, TRUE) +
 #   coord_cartesian(xlim=c(0,2)) + xlab("length")
