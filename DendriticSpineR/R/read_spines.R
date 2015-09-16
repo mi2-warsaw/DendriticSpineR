@@ -38,7 +38,8 @@
 #'
 #' @return a data.frame of spines class
 #'
-#' @import stringi openxlsx
+#' @importFrom stringi stri_extract_all_regex
+#' @importFrom openxlsx read.xlsx
 #'
 #' @export
 
