@@ -4,19 +4,19 @@
 \alias{plot_crossed_effects}
 \title{Function plots crossed effects}
 \usage{
-plot_crossed_effects(data, var, trans = I, inv = I,
-   strat = "Animal", mixed = TRUE, addpoints = FALSE)
+plot_crossed_effects(spines, property = "length", trans = I, inv = I,
+   strat = colnames(spines)[1], mixed = TRUE, addpoints = FALSE)
 }
 \arguments{
 \item{spines}{a data.frame of spines class}
 
-\item{property}{a variable of interest}
+\item{property}{a character with property variable; default: "length"}
 
-\item{trans}{a transformation of the property variable before ANOVA; default: I}
+\item{trans}{a transformation of the property variable before ANOVA; default: NA}
 
-\item{inv}{an inverse transformation of the trans(property); default: I}
+\item{inv}{an inverse transformation of the trans(property); default: NA}
 
-\item{strat}{a stratification (Animal); default: "Animal"}
+\item{strat}{a stratification (Animal); default: colnames(spines)[1]}
 
 \item{mixed}{if TRUE a mixed model is applied, if FALSE it's just standard
 linear regression; default: TRUE}
@@ -30,6 +30,12 @@ a crossed effects plot
 \description{
 Function \code{plot_crossed_effects} calculates averages and sd's
 (with the use of fixed or mixed models) and plots them.
-It is assumed that there are two crossed effects.
+}
+\details{
+Function \code{plot_crossed_effects} calculates averages and sd's
+(with the use of fixed or mixed models) and plots them.
+It is assumed that there are two crossed effects. Also if you do not
+choose both transformations which should be used during working with
+data, the function will match them to chosen property by itself.
 }
 

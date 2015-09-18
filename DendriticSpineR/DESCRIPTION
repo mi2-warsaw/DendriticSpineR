@@ -15,4 +15,5 @@ Imports:
   lsmeans,
   openxlsx,
   scales,
-  stringi
+  stringi,
+  tidyr

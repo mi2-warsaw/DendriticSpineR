@@ -1,52 +1,53 @@
-#' Plot of distributions of spines
+#' Distribution of spines
 #'
-#' Function \code{plot_animals} plots densities for given variable
-#' divided into groups plotted on different panels for different animal
+#' Function \code{plot_distributions} plots a distribution (both density function
+#' and cumulative density function) for dendritic spines grouped by one
+#' or more grouping variables.
 #'
-#' @usage plot_animals(spines, property = "length", box = FALSE)
+#' @usage plot_distributions(spines, property = "length", ecdf = TRUE, x_lim = c(0, 2))
 #'
-#' @param data a data.frame of spines class
-#' @param property a variable of interest; default: "length"
-#' @param box a way of presenting distribution - FALSE for kernel density
-#' or TRUE for boxplot; default: FALSE
+#' @param spines a data.frame of spines class
+#' @param property a character with property variable; default: "length"
+#' @param ecdf if TRUE then cumulative density function is plotted,
+#' if FALSE then density function is plotted; default: TRUE
+#' @param x_lim a vector with limits of x axis; default: c(0, 2)
 #'
-#' @return a panel plot of distributions
+#' @return a (cumulative) density function plot
 #'
-#' @import ggplot2
+#' @import scales
+#' @import tidyr
 #'
 #' @export
 
-plot_animals <- function(spines, property = "length", box = FALSE){
-  UseMethod("plot_animals")
+plot_distributions <- function(spines, property = "length", ecdf = TRUE, x_lim = c(0, 2)){
+  UseMethod("plot_distributions")
 }
 
 #' @export
 
-plot_animals.spines <- function(spines, property = "length", box = FALSE){
-  stopifnot(is.data.frame(spines), is.character(property), length(property) == 1,
-            is.logical(box))
+plot_distributions.spines <- function(spines, property = "length", ecdf = TRUE, x_lim = c(0, 2)){
+  stopifnot(is.data.frame(spines), is.character(property), length(property) == 1, is.logical(ecdf),
+            is.numeric(x_lim), length(x_lim) == 2)
 
-  data <- spines
   col_names <- colnames(spines)
-  strat <- col_names[1]
-  f1 <- col_names[2]
-  if (box) {
-    data$ng <- factor(paste(data[, 2], data[, strat]))
-    data$ng <- reorder(data$ng, data[, property], median, na.rm=TRUE)
-
-    pl <- ggplot(data, aes_string(x="ng", y=property, fill=f1)) +
-      geom_boxplot() + coord_flip() +
-      theme(legend.position="top") +
-      facet_wrap(as.formula(paste0("~", strat)))  + xlab("")
-  } else {
-    quant <- quantile(data[, property], c(0.001, 0.999))
-
-    pl <- ggplot(data, aes_string(fill=f1, x=property)) +
-      geom_density(adjust=1, alpha=0.5) +
-      coord_cartesian(xlim=quant) +
-      facet_wrap(as.formula(paste0("~", strat))) +
-      theme(legend.position="top")
+  if(!(property %in% col_names)){
+    stop(paste0("There is not any column in spines data called ", property, "."))
   }
 
+  col_nr_property <- which(col_names == property)
+  group <- spines[, 2]
+  spiness <- spines[, col_nr_property]
+  df <- data.frame(spiness, group)
+  if (ecdf) {
+    pl <- ggplot(df, aes(x=spiness, fill=group, color=group)) +
+      stat_ecdf(size=2) + theme_bw()  +
+      scale_y_continuous(labels = percent) +
+      ylab("")
+  } else {
+    pl <- ggplot(df, aes(x=spiness, fill=group, color=group)) +
+      geom_density(alpha=0.5) + theme_bw()
+  }
+
+  pl <- pl + coord_cartesian(xlim=x_lim) + xlab(property)
   return(pl)
 }

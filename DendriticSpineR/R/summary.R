@@ -13,7 +13,7 @@
 #' @export
 
 summary.spines <- function(object, ...){
-  spines = object
+  spines <- object
   stopifnot(is(spines, "spines"), is.data.frame(spines))
   col_names <- colnames(spines)
   cat("Summary of loaded data:\n")

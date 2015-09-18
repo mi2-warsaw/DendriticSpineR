@@ -4,10 +4,9 @@
 \alias{read_spines}
 \title{Proper loading data}
 \usage{
-read_spines(file, sep = ";", header = TRUE, sheet = 1,
-  animal_col_name, group_col_name,
-  photo_col_name = c("Photo_ID_abs", "Photo_ID_rel"),
-  spines_col_name, properties_col_name = c("length"))
+read_spines(file, animal_col_name, group_col_name,
+   photo_col_name = "Photo_ID_rel", spines_col_name,
+   properties_col_name = "length", ...)
 }
 \arguments{
 \item{file}{a file's path that will be loaded}
@@ -17,21 +16,14 @@ read_spines(file, sep = ";", header = TRUE, sheet = 1,
 \item{group_col_name}{a name of column with group}
 
 \item{photo_col_name}{a name/names of column/s with photos;
-default: c("Photo_ID_abs", "Photo_ID_rel")}
+default: Photo_ID_rel}
 
 \item{spines_col_name}{a name of column with spines' numbers}
 
 \item{properties_col_name}{a name/names of column/s with properties of
-dendritic spine which will be analysed; default c("length")}
+dendritic spine which will be analysed; default "length"}
 
-\item{sep}{a field separator character; default: ";"}
-
-\item{header}{a logical value indicating whether the file
-contains the names of the variables as its first line;
-default: TRUE}
-
-\item{sheet}{a number indicating which sheet from file is needed;
-default: 1}
+\item{...}{other arguments like sep, header, sheet, etc.}
 }
 \value{
 a data.frame of spines class
@@ -45,8 +37,8 @@ The result of this function is a data frame with filtred data
 including chosen by user columns and two new columns - 'group'
 and 'condition'. In 'group' column is a group of the animal
 and in 'condition' is substance which was used in the study.
-If there was only group (pattern like xx, not like xxxx or
-xx xx) in group_col_name column, a 'condition' is setted on 'x',
+If there was only group (pattern like 'ab', not like 'a(separator)b')
+in group_col_name column, a 'condition' is setted on 'x',
 so remember to update data file before using this function.
 Also remember to do not use 'group' as a name for
 group_col_name column, because 'group' column

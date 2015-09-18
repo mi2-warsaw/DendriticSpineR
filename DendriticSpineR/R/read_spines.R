@@ -8,33 +8,27 @@
 #' including chosen by user columns and two new columns - 'group'
 #' and 'condition'. In 'group' column is a group of the animal
 #' and in 'condition' is substance which was used in the study.
-#' If there was only group (pattern like xx, not like xxxx or
-#' xx xx) in group_col_name column, a 'condition' is setted on 'x',
+#' If there was only group (pattern like 'ab', not like 'a(separator)b')
+#' in group_col_name column, a 'condition' is setted on 'x',
 #' so remember to update data file before using this function.
 #' Also remember to do not use 'group' as a name for
 #' group_col_name column, because 'group' column
 #' will be added by \code{read_spines} function and it
 #' will be used by plotting functions.
 #'
-#' @usage read_spines(file, sep = ";", header = TRUE, sheet = 1,
-#'   animal_col_name, group_col_name,
-#'   photo_col_name = c("Photo_ID_abs", "Photo_ID_rel"),
-#'   spines_col_name, properties_col_name = c("length"))
+#' @usage read_spines(file, animal_col_name, group_col_name,
+#'    photo_col_name = "Photo_ID_rel", spines_col_name,
+#'    properties_col_name = "length", ...)
 #'
 #' @param file a file's path that will be loaded
-#' @param sep a field separator character; default: ";"
-#' @param header a logical value indicating whether the file
-#' contains the names of the variables as its first line;
-#' default: TRUE
-#' @param sheet a number indicating which sheet from file is needed;
-#' default: 1
 #' @param animal_col_name a name of column with animal
 #' @param group_col_name a name of column with group
 #' @param photo_col_name a name/names of column/s with photos;
-#' default: c("Photo_ID_abs", "Photo_ID_rel")
+#' default: Photo_ID_rel
 #' @param spines_col_name a name of column with spines' numbers
 #' @param properties_col_name a name/names of column/s with properties of
-#' dendritic spine which will be analysed; default c("length")
+#' dendritic spine which will be analysed; default "length"
+#' @param ... other arguments like sep, header, sheet, etc.
 #'
 #' @return a data.frame of spines class
 #'
@@ -44,9 +38,9 @@
 #' @export
 
 read_spines <- function(file, animal_col_name, group_col_name,
-                       photo_col_name = c("Photo_ID_abs", "Photo_ID_rel"), spines_col_name,
-                       properties_col_name = c("length"), ...){
-  stopifnot(is.character(file), 
+                       photo_col_name = "Photo_ID_rel", spines_col_name,
+                       properties_col_name = "length", ...){
+  stopifnot(is.character(file),
             is.character(animal_col_name), length(animal_col_name) == 1, is.character(group_col_name),
             length(group_col_name) == 1, is.character(photo_col_name), length(photo_col_name) > 0,
             is.character(spines_col_name), length(spines_col_name) == 1, is.character(properties_col_name),
@@ -91,8 +85,6 @@ read_spines <- function(file, animal_col_name, group_col_name,
   }
 
   #spliting Group column into two columns with group and condition information
-  groups <- stri_extract_all_regex(spines[, group_col_name], "\\p{L}{2}")
-  
   groups <- strsplit(as.character(spines[, group_col_name]), split="[^A-Za-z0-9]")
   length_groups <- length(groups)
   flag_warning <- FALSE
