@@ -174,3 +174,16 @@ plot_crossed_effects(spines, property = "length",
 #example
 ms <- model_spines(spines, photo_col_name = "Photo_ID_rel")
 diffogram(ms)
+
+##
+## 11. Generating raport file
+##
+
+generate_raport_file(getwd(), file_path = file, spines = spines)
+
+
+##
+## 12. Rendering raport
+##
+
+render_raport(file_path = "raport-2015-09-18.Rmd", destination_path = "raport-2015-09-18.html")
