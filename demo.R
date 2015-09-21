@@ -151,6 +151,10 @@ plot_crossed_effects(spines, property = "length",
                      mixed = FALSE)
 
 plot_crossed_effects(spines, property = "length",
+                     strat = "Animal",
+                     mixed = FALSE)
+
+plot_crossed_effects(spines, property = "length",
                      trans = log, inv = exp,
                      strat = "Animal:group",
                      mixed = TRUE)
@@ -179,11 +183,15 @@ diffogram(ms)
 ## 11. Generating raport file
 ##
 
-generate_raport_file(getwd(), file_path = file, spines = spines)
+generate_raport_file(folder_path = getwd(), file_path = file, spines = spines)
 
 
 ##
 ## 12. Rendering raport
 ##
 
-render_raport(file_path = "raport-2015-09-18.Rmd", destination_path = "raport-2015-09-18.html")
+# render_raport(file_path = "put here name of .Rmd film with generated raport file",
+#               destination_path = "put here the name of .html file with raport")
+
+render_raport(file_path = paste0("raport-", Sys.Date(), ".Rmd"),
+                                 destination_path = paste0("raport-", Sys.Date(), ".html"))

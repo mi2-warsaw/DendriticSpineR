@@ -4,7 +4,7 @@
 \alias{generate_raport_file}
 \title{A generation of raport file}
 \usage{
-generate_raport_file(folder_path, file_path, spines, x_lim = c(0, 2))
+generate_raport_file(folder_path, spines, x_lim = c(0, 2))
 }
 \arguments{
 \item{folder_path}{a path to the folder where file will be made}

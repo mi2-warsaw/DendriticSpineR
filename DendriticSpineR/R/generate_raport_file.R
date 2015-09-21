@@ -3,7 +3,7 @@
 #' Function \code{generate_raport_file} generates
 #' a raport file.
 #'
-#' @usage generate_raport_file(folder_path, file_path, spines, x_lim = c(0, 2))
+#' @usage generate_raport_file(folder_path, spines, x_lim = c(0, 2))
 #'
 #' @param folder_path a path to the folder where file will be made
 #' @param file_path a path to the file with spines data
@@ -15,7 +15,8 @@
 #' @export
 
 generate_raport_file <- function(folder_path, file_path, spines, x_lim = c(0, 2)){
-  stopifnot(is.character(folder_path), is(spines, "spines"), is.data.frame(spines))
+  stopifnot(is.character(folder_path), is(spines, "spines"), is.data.frame(spines),
+            is.numeric(x_lim), length(x_lim) == 2)
 
   if(!file.exists(folder_path)){
     stop("Chosen folder does not exists. Create it before evaluation of function!")
@@ -25,9 +26,9 @@ generate_raport_file <- function(folder_path, file_path, spines, x_lim = c(0, 2)
               "output:\n  html_document:\n    toc: true\n---\n")
 
   lib <- c("```{r, message=FALSE, warning=FALSE}\nlibrary(DendriticSpineR)\n",
-           paste("spines <- read_spines(\"zebrane.csv\", \"Animal\",",
-                      "\"Group\", \"spine_number\", \"Photo_ID_rel\",",
-                      "c(\"length\",\"foot\",\"head_width\"),",
+           paste0("spines <- read_spines(\"", file_path, "\", \"Animal\", ",
+                      "\"Group\", \"spine_number\", \"Photo_ID_rel\", ",
+                      "c(\"length\",\"foot\",\"head_width\"), ",
                       "header = TRUE, sep = \";\")"), "```\n")
 
   name <- paste0(folder_path, "/raport-", Sys.Date(), ".Rmd")
