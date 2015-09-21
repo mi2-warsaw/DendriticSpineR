@@ -14,8 +14,7 @@
 #'
 #' @return a (cumulative) density function plot
 #'
-#' @import scales
-#' @import tidyr
+#' @importFrom scales percent
 #'
 #' @export
 

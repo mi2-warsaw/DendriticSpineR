@@ -31,7 +31,6 @@
 #'
 #' @return a data.frame of spines class
 #'
-#' @importFrom stringi stri_extract_all_regex
 #' @importFrom openxlsx read.xlsx
 #'
 #' @export
@@ -57,7 +56,8 @@ read_spines <- function(file, animal_col_name, group_col_name,
   }
 
   #checking type of file
-  file_type <- unlist(stri_extract_all_regex(file,"(?<=\\.).{3,4}$"))
+  file_type <- unlist(strsplit(file, "\\."))
+  file_type <- tail(file_type, 1)
 
   #reading file
   if(file_type == "xlsx"){

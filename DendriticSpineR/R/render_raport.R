@@ -10,7 +10,7 @@
 #'
 #' @return invisible NULL
 #'
-#' @import rmarkdown knitr
+#' @importFrom rmarkdown render
 #'
 #' @export
 

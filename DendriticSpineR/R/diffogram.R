@@ -17,14 +17,6 @@
 #'
 #' @import lsmeans
 #'
-#' @examples
-#' \dontrun{
-#' model <- lmer(log(length) ~ group + (1|Animal) , data=data)
-#' lsmodel <- lsmeans(model,  pairwise~group, adjust="tukey")
-#' diffogram(lsmodel)
-#' }
-#'
-
 #' @export
 
 diffogram <- function(lsmodel, logt = FALSE){

@@ -28,8 +28,7 @@
 #' @import ggplot2
 #' @import lme4
 #' @import dplyr
-#' @import tidyr
-#' @importFrom stringi stri_detect_regex
+#' @importFrom tidyr extract
 #'
 #' @export
 
@@ -47,9 +46,9 @@ plot_crossed_effects.spines <- function(spines, property = "length", trans = NA,
             suppressWarnings((is.na(inv)) || is.function(inv)), is.character(strat),
             is.logical(mixed), is.logical(addpoints))
 
-  if(stri_detect_regex(strat, ":") && mixed == FALSE){
+  if(grepl(strat, pattern=":") && mixed == FALSE){
     stop("Standard linear regression cannot be applied for this stratification! Remove ':'.")
-  } else if(stri_detect_regex(strat, ":") && addpoints == TRUE){
+  } else if(grepl(strat, pattern=":") && addpoints == TRUE){
     stop("Ppoints cannot be added for this stratification! Remove ':'.")
   }
 

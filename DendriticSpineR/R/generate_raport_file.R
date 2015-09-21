@@ -61,7 +61,7 @@ generate_raport_file <- function(folder_path, file_path, animal_col_name, group_
       }
     }
     dots <- paste0(names(dots), sep = " = ", dots, collapse = ", ")
-    dots <- paste0(", ", dots)
+    dots <- paste0(",\n                      ", dots)
 
     lib_spines <- c("```{r, message=FALSE, warning=FALSE}\nlibrary(DendriticSpineR)\n",
                     paste0("spines <- read_spines(file = \"", file_path, "\",\n",

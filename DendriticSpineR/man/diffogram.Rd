@@ -23,11 +23,4 @@ More informations about diffograms:
 ,,Interpreting the Differences Among LSMEANS in Generalized Linear Models''
 http://www.mwsug.org/proceedings/2011/dataviz/MWSUG-2011-DG08.pdf
 }
-\examples{
-\dontrun{
-model <- lmer(log(length) ~ group + (1|Animal) , data=data)
-lsmodel <- lsmeans(model,  pairwise~group, adjust="tukey")
-diffogram(lsmodel)
-}
-}
 

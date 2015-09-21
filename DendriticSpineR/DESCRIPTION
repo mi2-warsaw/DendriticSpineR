@@ -11,11 +11,11 @@ LazyLoad: true
 Imports:
   dplyr,
   ggplot2,
-  knitr,
   lme4,
   lsmeans,
   openxlsx,
   rmarkdown,
   scales,
-  stringi,
   tidyr
+SystemRequirements:
+  knitr
