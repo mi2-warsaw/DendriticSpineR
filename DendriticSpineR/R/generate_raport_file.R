@@ -3,33 +3,82 @@
 #' Function \code{generate_raport_file} generates
 #' a raport file.
 #'
-#' @usage generate_raport_file(folder_path, spines, x_lim = c(0, 2))
+#' @usage generate_raport_file(folder_path, file_path, spines, x_lim = c(0, 2))
 #'
 #' @param folder_path a path to the folder where file will be made
 #' @param file_path a path to the file with spines data
-#' @param spines a data.frame of spines class
+#' @param animal_col_name a name of column with animal
+#' @param group_col_name a name of column with group
+#' @param photo_col_name a name of column with photos; default: Photo_ID_rel
+#' @param spines_col_name a name of column with spines' numbers
+#' @param properties_col_name a name/names of column/s with properties of
+#' dendritic spine which will be analysed; default "length"
 #' @param x_lim a vector with limits of x axis; default: c(0, 2)
+#' @param ... other arguments like sep, header, sheet, etc.
 #'
 #' @return invisible NULL
 #'
 #' @export
 
-generate_raport_file <- function(folder_path, file_path, spines, x_lim = c(0, 2)){
-  stopifnot(is.character(folder_path), is(spines, "spines"), is.data.frame(spines),
-            is.numeric(x_lim), length(x_lim) == 2)
+generate_raport_file <- function(folder_path, file_path, animal_col_name, group_col_name,
+                                 photo_col_name = "Photo_ID_rel", spines_col_name,
+                                 properties_col_name = "length", x_lim = c(0, 2), ...){
+  stopifnot(is.character(folder_path), is.character(file_path), is.character(animal_col_name),
+            length(animal_col_name) == 1, is.character(group_col_name),
+            length(group_col_name) == 1, is.character(photo_col_name),
+            length(photo_col_name) == 1, is.character(spines_col_name),
+            length(spines_col_name) == 1, is.character(properties_col_name),
+            length(properties_col_name) > 0, is.numeric(x_lim), length(x_lim) == 2)
 
+  #checking if file and folder exists
   if(!file.exists(folder_path)){
     stop("Chosen folder does not exists. Create it before evaluation of function!")
   }
 
+  if(!file.exists(file_path)){
+    stop("Chosen file does not exists!")
+  }
+
+  #making header and library lines
   header <- c("---\ntitle: Spines\nauthor: ", paste("date:", Sys.Date()),
               "output:\n  html_document:\n    toc: true\n---\n")
 
-  lib <- c("```{r, message=FALSE, warning=FALSE}\nlibrary(DendriticSpineR)\n",
-           paste0("spines <- read_spines(\"", file_path, "\", \"Animal\", ",
-                      "\"Group\", \"spine_number\", \"Photo_ID_rel\", ",
-                      "c(\"length\",\"foot\",\"head_width\"), ",
-                      "header = TRUE, sep = \";\")"), "```\n")
+  if(length(properties_col_name) > 1){
+    properties_string <- paste0("\"", properties_col_name, "\"", collapse = ", ")
+    properties_string <- paste0("c(", properties_string, ")")
+  } else{
+    properties_string <- paste0("\"", properties_col_name, "\"")
+  }
+
+  dots <- c(...)
+  dots_length <- length(dots)
+  if(dots_length > 0){
+    for(i in seq(dots_length)){
+      if(dots[i] == TRUE | dots[i] == FALSE){
+        dots[i] <- dots[i]
+      } else if(is.character(dots[i])){
+        dots[i] <- paste0("\"", dots[i], "\"")
+      }
+    }
+    dots <- paste0(names(dots), sep = " = ", dots, collapse = ", ")
+    dots <- paste0(", ", dots)
+
+    lib_spines <- c("```{r, message=FALSE, warning=FALSE}\nlibrary(DendriticSpineR)\n",
+                    paste0("spines <- read_spines(file = \"", file_path, "\",\n",
+                           "                      animal_col_name = \"", animal_col_name, "\",\n",
+                           "                      group_col_name = \"", group_col_name, "\",\n",
+                           "                      photo_col_name = \"", photo_col_name, "\",\n",
+                           "                      spines_col_name = \"", spines_col_name, "\",\n",
+                           "                      properties_col_name = ", properties_string, dots, ")"), "```\n")
+  } else{
+    lib_spines <- c("```{r, message=FALSE, warning=FALSE}\nlibrary(DendriticSpineR)\n",
+                    paste0("spines <- read_spines(file = \"", file_path, "\",\n",
+                           "                       animal_col_name = \"", animal_col_name, "\",\n",
+                           "                       group_col_name = \"", group_col_name, "\",\n",
+                           "                       photo_col_name = \"", photo_col_name, "\",\n",
+                           "                       spines_col_name = \"", spines_col_name, "\",\n",
+                           "                       properties_col_name = ", properties_string, ")"), "```\n")
+  }
 
   name <- paste0(folder_path, "/raport-", Sys.Date(), ".Rmd")
 
@@ -37,13 +86,18 @@ generate_raport_file <- function(folder_path, file_path, spines, x_lim = c(0, 2)
 
   #adding header
   for(i in seq_len(length(header))){
-    writeLines(header[i],con)
+    writeLines(header[i], con)
   }
 
   #adding library
-  writeLines(lib,con)
+  writeLines(lib_spines, con)
 
   #adding analisys
+  spines <- read_spines(file_path, animal_col_name = animal_col_name,
+                        group_col_name = group_col_name,
+                        spines_col_name = spines_col_name,
+                        photo_col_name = photo_col_name,
+                        properties_col_name = properties_col_name, ...)
   col_names <- colnames(spines)
   length_names <- length(col_names)
   col_analysis <- numeric(length_names)

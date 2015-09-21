@@ -23,8 +23,7 @@
 #' @param file a file's path that will be loaded
 #' @param animal_col_name a name of column with animal
 #' @param group_col_name a name of column with group
-#' @param photo_col_name a name/names of column/s with photos;
-#' default: Photo_ID_rel
+#' @param photo_col_name a name of column with photos; default: Photo_ID_rel
 #' @param spines_col_name a name of column with spines' numbers
 #' @param properties_col_name a name/names of column/s with properties of
 #' dendritic spine which will be analysed; default "length"
@@ -42,9 +41,14 @@ read_spines <- function(file, animal_col_name, group_col_name,
                        properties_col_name = "length", ...){
   stopifnot(is.character(file),
             is.character(animal_col_name), length(animal_col_name) == 1, is.character(group_col_name),
-            length(group_col_name) == 1, is.character(photo_col_name), length(photo_col_name) > 0,
+            length(group_col_name) == 1, is.character(photo_col_name), length(photo_col_name) == 1,
             is.character(spines_col_name), length(spines_col_name) == 1, is.character(properties_col_name),
             length(properties_col_name) > 0)
+
+  #checking if file exists
+  if(!file.exists(file)){
+    stop("Chosen file does not exists!")
+  }
 
   #checking group_col_name to wrong pattern
   if(group_col_name == "group"){
@@ -127,6 +131,7 @@ read_spines <- function(file, animal_col_name, group_col_name,
   }
   spines <- spines[, c(col_nr_animal, col_nr_Group, col_nr_group, col_nr_condition,
                        col_nr_photo, col_nr_spines, col_nr_properties)]
+  spines[, 2] <- as.factor(spines[, 2])
 
   #setting class for S3 methods
   class(spines) <- c("spines", "data.frame")

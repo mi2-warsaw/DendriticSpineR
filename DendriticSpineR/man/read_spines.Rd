@@ -15,8 +15,7 @@ read_spines(file, animal_col_name, group_col_name,
 
 \item{group_col_name}{a name of column with group}
 
-\item{photo_col_name}{a name/names of column/s with photos;
-default: Photo_ID_rel}
+\item{photo_col_name}{a name of column with photos; default: Photo_ID_rel}
 
 \item{spines_col_name}{a name of column with spines' numbers}
 

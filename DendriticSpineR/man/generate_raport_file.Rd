@@ -4,16 +4,27 @@
 \alias{generate_raport_file}
 \title{A generation of raport file}
 \usage{
-generate_raport_file(folder_path, spines, x_lim = c(0, 2))
+generate_raport_file(folder_path, file_path, spines, x_lim = c(0, 2))
 }
 \arguments{
 \item{folder_path}{a path to the folder where file will be made}
 
 \item{file_path}{a path to the file with spines data}
 
-\item{spines}{a data.frame of spines class}
+\item{animal_col_name}{a name of column with animal}
+
+\item{group_col_name}{a name of column with group}
+
+\item{photo_col_name}{a name of column with photos; default: Photo_ID_rel}
+
+\item{spines_col_name}{a name of column with spines' numbers}
+
+\item{properties_col_name}{a name/names of column/s with properties of
+dendritic spine which will be analysed; default "length"}
 
 \item{x_lim}{a vector with limits of x axis; default: c(0, 2)}
+
+\item{...}{other arguments like sep, header, sheet, etc.}
 }
 \value{
 invisible NULL

@@ -183,7 +183,12 @@ diffogram(ms)
 ## 11. Generating raport file
 ##
 
-generate_raport_file(folder_path = getwd(), file_path = file, spines = spines)
+generate_raport_file(folder_path = getwd(), file_path = file, animal_col_name = animal_col_name,
+                     group_col_name = group_col_name,
+                     spines_col_name = spines_col_name,
+                     photo_col_name = photo_col_name,
+                     properties_col_name = properties_col_name,
+                     header = TRUE, sep = ";")
 
 
 ##
