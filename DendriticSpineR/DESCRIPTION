@@ -1,8 +1,8 @@
 Package: DendriticSpineR
 Title: Tools for playing with Dendritic Spine Data
 Version: 1.0.0
-Authors@R: c(person("Przemyslaw", "Biecek", , "przemyslaw.biecek@gmail.com", role = c("aut", "cre")),
-             person("Piotr", "Smuda", , "piotrsmuda@gmail.com", role = "aut"))
+Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre")),
+             person("Piotr", "Smuda", email = "piotrsmuda@gmail.com", role = "aut"))
 Description: Tools for playing with Dendritic Spine Data
 Depends: R (>= 3.1.3)
 License: GPL-2

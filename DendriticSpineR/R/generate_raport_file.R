@@ -121,8 +121,8 @@ generate_raport_file <- function(folder_path, file_path, animal_col_name, group_
     element_4 <- paste0("plot_animals(spines, property = \"", col_analysis[i], "\", box = TRUE", ")\n")
     element_5 <- paste0("plot_crossed_effects(spines, property = \"", col_analysis[i], "\", ",
                         "strat = \"Animal:group\", mixed = TRUE)\n")
-    element_6 <- paste0("ms <- model_spines(spines, photo_col_name = \"",
-                        col_names[nr_col_analysis[1] - 2], "\")")
+    element_6 <- paste0("(ms <- model_spines(spines, photo_col_name = \"",
+                        col_names[nr_col_analysis[1] - 2], "\"))")
     element_7 <- "diffogram(ms)"
 
     r_sequence <- c("```{r}", element_1, element_2, element_3, element_4, element_5,

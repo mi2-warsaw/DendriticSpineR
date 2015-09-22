@@ -1,0 +1,66 @@
+---
+title: Spines
+author: 
+date: 2015-09-22
+output:
+  html_document:
+    toc: true
+---
+
+```{r, message=FALSE, warning=FALSE}
+library(DendriticSpineR)
+
+spines <- read_spines(file = "zebrane.csv",
+                      animal_col_name = "Animal",
+                      group_col_name = "Group",
+                      photo_col_name = "Photo_ID_rel",
+                      spines_col_name = "spine_number",
+                      properties_col_name = c("length", "foot", "head_width"),
+                      header = TRUE, sep = ";")
+```
+
+# length 
+
+```{r}
+plot_distributions(spines, property = "length", ecdf = TRUE, x_lim = c(0, 2))
+plot_distributions(spines, property = "length", ecdf = FALSE, x_lim = c(0, 2))
+
+plot_animals(spines, property = "length", box = FALSE)
+plot_animals(spines, property = "length", box = TRUE)
+
+plot_crossed_effects(spines, property = "length", strat = "Animal:group", mixed = TRUE)
+
+(ms <- model_spines(spines, photo_col_name = "Photo_ID_rel"))
+diffogram(ms)
+```
+
+# foot 
+
+```{r}
+plot_distributions(spines, property = "foot", ecdf = TRUE, x_lim = c(0, 2))
+plot_distributions(spines, property = "foot", ecdf = FALSE, x_lim = c(0, 2))
+
+plot_animals(spines, property = "foot", box = FALSE)
+plot_animals(spines, property = "foot", box = TRUE)
+
+plot_crossed_effects(spines, property = "foot", strat = "Animal:group", mixed = TRUE)
+
+(ms <- model_spines(spines, photo_col_name = "Photo_ID_rel"))
+diffogram(ms)
+```
+
+# head_width 
+
+```{r}
+plot_distributions(spines, property = "head_width", ecdf = TRUE, x_lim = c(0, 2))
+plot_distributions(spines, property = "head_width", ecdf = FALSE, x_lim = c(0, 2))
+
+plot_animals(spines, property = "head_width", box = FALSE)
+plot_animals(spines, property = "head_width", box = TRUE)
+
+plot_crossed_effects(spines, property = "head_width", strat = "Animal:group", mixed = TRUE)
+
+(ms <- model_spines(spines, photo_col_name = "Photo_ID_rel"))
+diffogram(ms)
+```
+
