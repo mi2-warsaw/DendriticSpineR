@@ -10,6 +10,7 @@
 #' @param property a character with property variable; default: "length"
 #' @param trans a transformation of the property variable before ANOVA; default: NA
 #' @param inv an inverse transformation of the trans(property); default: NA
+#' @param strat a stratification (Animal); default: paste0(animal_col_name, ":group")
 #' @param photo_col_name a name of column with photos; default: colnames(spines)[5]
 #'
 #' @return a list from lsmeans function
@@ -20,13 +21,15 @@
 #'
 #' @export
 
-model_spines <- function(spines, property = "length", trans = NA, photo_col_name = colnames(spines)[5]){
+model_spines <- function(spines, property = "length", trans = NA,
+                         strat = paste0(colnames(spines)[1], ":group"), photo_col_name = colnames(spines)[5]){
   UseMethod("model_spines")
 }
 
 #' @export
 
-model_spines.spines <- function(spines, property = "length", trans = NA, photo_col_name = colnames(spines)[5]){
+model_spines.spines <- function(spines, property = "length", trans = NA,
+                                strat = paste0(colnames(spines)[1], ":group"), photo_col_name = colnames(spines)[5]){
   stopifnot(is.data.frame(spines), is.character(property), length(property) == 1,
             (suppressWarnings(is.na(trans)) || is.function(trans)), is.character(photo_col_name))
 
@@ -48,12 +51,10 @@ model_spines.spines <- function(spines, property = "length", trans = NA, photo_c
   data <- spines
   colnames(data)[2] <- "Group"
   formula_model <- as.formula(paste0(trans, "(", property, ") ~ ", col_names[2], " + (1|",
-                                     col_names[1], ":group) + (1|", photo_col_name,
-                                     ":", col_names[1], ":group)"))
+                                     strat, ") + (1|", photo_col_name,
+                                     ":", strat, ")"))
   mixed_model <- lmer(formula_model, data=data)
   ms <- lsmeans(mixed_model, pairwise~Group, adjust="tukey")
 
   return(ms)
 }
-
-

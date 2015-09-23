@@ -14,6 +14,8 @@ model_spines(spines, property = "length", trans = NA,
 
 \item{trans}{a transformation of the property variable before ANOVA; default: NA}
 
+\item{strat}{a stratification (Animal); default: paste0(animal_col_name, ":group")}
+
 \item{photo_col_name}{a name of column with photos; default: colnames(spines)[5]}
 
 \item{inv}{an inverse transformation of the trans(property); default: NA}

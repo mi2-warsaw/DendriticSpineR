@@ -188,6 +188,7 @@ generate_raport_file(folder_path = getwd(), file_path = file, animal_col_name = 
                      spines_col_name = spines_col_name,
                      photo_col_name = photo_col_name,
                      properties_col_name = properties_col_name,
+                     strat = "Animal:group", mixed = TRUE,
                      header = TRUE, sep = ";")
 
 
@@ -198,5 +199,17 @@ generate_raport_file(folder_path = getwd(), file_path = file, animal_col_name = 
 # render_raport(file_path = "put here name of .Rmd film with generated raport file",
 #               destination_path = "put here the name of .html file with raport")
 
-render_raport(file_path = paste0("raport-", Sys.Date(), ".Rmd"),
-                                 destination_path = paste0("raport-", Sys.Date(), ".html"))
+render_raport(file_path = paste0("spines-raport-", Sys.Date(), ".Rmd"),
+                                 destination_path = paste0("spines-raport-", Sys.Date(), ".html"))
+
+##
+## 11. Generating raport file and rendering it at ones
+##
+
+generate_raport(folder_path = getwd(), file_path = file, animal_col_name = animal_col_name,
+                     group_col_name = group_col_name,
+                     spines_col_name = spines_col_name,
+                     photo_col_name = photo_col_name,
+                     properties_col_name = properties_col_name,
+                     strat = "Animal", mixed = FALSE,
+                     header = TRUE, sep = ";")

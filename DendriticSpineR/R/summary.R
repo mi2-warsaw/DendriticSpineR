@@ -3,6 +3,17 @@
 #' Function \code{summary} summarises loaded data
 #' by \code{read_spines} function.
 #'
+#' @details Function \code{summary} summarises loaded data
+#' by \code{read_spines} function.
+#'
+#' Summarised columns:
+#' \enumerate{
+#' \item Animal column - (unique) appearances of animals,
+#' \item Group column - appearance of elements,
+#' \item group and condition columns - appearance of elements,
+#' \item properties columns - statistic summary.
+#' }
+#'
 #' @usage summary(object, ...)
 #'
 #' @param object a data.frame of spines class

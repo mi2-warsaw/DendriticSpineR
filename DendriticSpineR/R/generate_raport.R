@@ -1,28 +1,27 @@
-#' A generation of raport file
+#' A generation of a raport
 #'
-#' Function \code{generate_raport_file} generates
-#' a raport file.
+#' Function \code{generate_raport} generates a raport.
 #'
-#' @details Function \code{generate_raport_file} generates
-#' a raport file (*.Rmd file) in indicated folder. The scheme
-#' of the name of the raport file is: "spines-raport-YYYY-MM-DD.Rmd",
-#' where:
+#' @details Function \code{generate_raport} generates
+#' a raport in indicated folder. There will be made two files:
+#' *.Rmd and *.html. The scheme of the names of the files is:
+#' "spines-raport-YYYY-MM-DD.(Rmd|html)", where:
 #' \itemize{
 #' \item "YYYY" is year,
 #' \item "MM" is month,
 #' \item "DD" is day.}
 #' The title of the raport is setted to "Spines". If you want change
-#' its title or add author to the raport edit the raport file by hand.
+#' its title or add author to the raport edit the raport file (*.Rmd) by hand.
 #' The space with these informations is at the top of the file.
 #' When the raport file is ready, use \code{render_raport} function
-#' to render it to the *.html file.
+#' to render it again to the *.html file.
 #'
-#' @usage generate_raport_file(folder_path, file_path, animal_col_name, group_col_name,
+#' @usage generate_raport(folder_path, file_path, animal_col_name, group_col_name,
 #'    photo_col_name = "Photo_ID_rel", spines_col_name,
 #'    properties_col_name = "length", x_lim = c(0, 2),
 #'    strat = paste0(animal_col_name, ":group"), mixed = TRUE, ...)
 #'
-#' @param folder_path a path to the folder where file will be made
+#' @param folder_path a path to the folder where raport will be made
 #' @param file_path a path to the file with spines data
 #' @param animal_col_name a name of column with animal
 #' @param group_col_name a name of column with group
@@ -40,7 +39,7 @@
 #'
 #' @export
 
-generate_raport_file <- function(folder_path, file_path, animal_col_name, group_col_name,
+generate_raport <- function(folder_path, file_path, animal_col_name, group_col_name,
                                  photo_col_name = "Photo_ID_rel", spines_col_name,
                                  properties_col_name = "length", x_lim = c(0, 2),
                                  strat = paste0(animal_col_name, ":group"), mixed = TRUE, ...){
@@ -102,7 +101,8 @@ generate_raport_file <- function(folder_path, file_path, animal_col_name, group_
                            "                       properties_col_name = ", properties_string, ")"), "```\n")
   }
 
-  name <- paste0(folder_path, "/spines-raport-", Sys.Date(), ".Rmd")
+  name_prefix <- paste0(folder_path, "/spines-raport-", Sys.Date())
+  name <- paste0(name_prefix, ".Rmd")
 
   con <- file(name,"w")
 
@@ -155,6 +155,10 @@ generate_raport_file <- function(folder_path, file_path, animal_col_name, group_
   }
 
   close(con)
+
+  #rendering file
+  destination_name <- paste0(name_prefix, ".html")
+  render(name, output_file = destination_name)
 
   return(invisible(NULL))
 }
