@@ -10,7 +10,7 @@
 #' \enumerate{
 #' \item Animal column - (unique) appearances of animals,
 #' \item Group column - appearance of elements,
-#' \item group and condition columns - appearance of elements,
+#' \item group and condition columns - appearance of elements (unique appearance),
 #' \item properties columns - statistic summary.
 #' }
 #'
@@ -47,9 +47,15 @@ summary.spines <- function(object, ...){
 
   #information about group and condition
   cat(paste0("\n3-4. columns - ", col_names[3], ", ", col_names[4], ":\n\n"))
-  column <- spines[, 3:4]
+  column <- spines[, c(1,3,4)] # spines[, 3:4]
+  column_unique <- unique(column)[, 2:3]
+  column <- column[, 2:3]
   cat("Appearance of elements:\n")
   info <- table(column)
+  info_unique <- table(column_unique)
+  for(i in seq_len(length(info))){
+    info[i] <- paste0(info[i], " (", info_unique[i], ")")
+  }
   if(any(colnames(info) == "x")){
     warning(paste0("Some records in '", col_names[2], "' column were without condition",
                    " (not uniform pattern)!\n",

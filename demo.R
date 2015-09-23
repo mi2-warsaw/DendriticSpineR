@@ -82,6 +82,7 @@ spines <- read_spines(file, animal_col_name = animal_col_name,
 #"wt tg", you will get new columns: group with "ko", "tg", "wt" (first element of pattern) and
 #condition with "ko", "tg", "x" (second element of pattern). So, to avoid this situation, you
 #should edit file with data.
+#If you want load *.xlsx file remove header = TRUE, sep = ";" from arguments.
 
 ##
 ## 6. Summary of loaded file with data
@@ -206,7 +207,7 @@ render_raport(file_path = paste0("spines-raport-", Sys.Date(), ".Rmd"),
 ## 11. Generating raport file and rendering it at ones
 ##
 
-generate_raport(folder_path = getwd(), file_path = file, animal_col_name = animal_col_name,
+make_raport(folder_path = getwd(), file_path = file, animal_col_name = animal_col_name,
                      group_col_name = group_col_name,
                      spines_col_name = spines_col_name,
                      photo_col_name = photo_col_name,

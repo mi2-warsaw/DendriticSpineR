@@ -7,7 +7,9 @@
 generate_raport_file(folder_path, file_path, animal_col_name, group_col_name,
    photo_col_name = "Photo_ID_rel", spines_col_name,
    properties_col_name = "length", x_lim = c(0, 2),
-   strat = paste0(animal_col_name, ":group"), mixed = TRUE, ...)
+   strat = paste0(animal_col_name, ":group"), mixed = TRUE,
+   fig_width_animals = 15, fig_heigth_animals = 15, fig_width = 10,
+   fig_heigth = 7, ...)
 }
 \arguments{
 \item{folder_path}{a path to the folder where file will be made}
@@ -31,6 +33,14 @@ dendritic spine which will be analysed; default "length"}
 
 \item{mixed}{if TRUE a mixed model is applied, if FALSE it's just standard
 linear regression; default: TRUE}
+
+\item{fig_width_animals}{a figures' (only \code{plot_animals} function) width; default 15}
+
+\item{fig_heigth_animals}{a figures' (only \code{plot_animals} function) width; default 15}
+
+\item{fig_width}{a figures' (without \code{plot_animals} function) width; default 10}
+
+\item{fig_heigth}{a figures' (without \code{plot_animals} function) width; default 7}
 
 \item{...}{other arguments like sep, header, sheet, etc.}
 }

@@ -26,7 +26,7 @@ Summarised columns:
 \enumerate{
 \item Animal column - (unique) appearances of animals,
 \item Group column - appearance of elements,
-\item group and condition columns - appearance of elements,
+\item group and condition columns - appearance of elements (unique appearance),
 \item properties columns - statistic summary.
 }
 }

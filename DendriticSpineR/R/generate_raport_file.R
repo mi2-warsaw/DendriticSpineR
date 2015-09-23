@@ -20,7 +20,9 @@
 #' @usage generate_raport_file(folder_path, file_path, animal_col_name, group_col_name,
 #'    photo_col_name = "Photo_ID_rel", spines_col_name,
 #'    properties_col_name = "length", x_lim = c(0, 2),
-#'    strat = paste0(animal_col_name, ":group"), mixed = TRUE, ...)
+#'    strat = paste0(animal_col_name, ":group"), mixed = TRUE,
+#'    fig_width_animals = 15, fig_heigth_animals = 15, fig_width = 10,
+#'    fig_heigth = 7, ...)
 #'
 #' @param folder_path a path to the folder where file will be made
 #' @param file_path a path to the file with spines data
@@ -34,6 +36,10 @@
 #' @param strat a stratification (Animal); default: paste0(animal_col_name, ":group")
 #' @param mixed if TRUE a mixed model is applied, if FALSE it's just standard
 #' linear regression; default: TRUE
+#' @param fig_width_animals a figures' (only \code{plot_animals} function) width; default 15
+#' @param fig_heigth_animals a figures' (only \code{plot_animals} function) width; default 15
+#' @param fig_width a figures' (without \code{plot_animals} function) width; default 10
+#' @param fig_heigth a figures' (without \code{plot_animals} function) width; default 7
 #' @param ... other arguments like sep, header, sheet, etc.
 #'
 #' @return invisible NULL
@@ -43,14 +49,17 @@
 generate_raport_file <- function(folder_path, file_path, animal_col_name, group_col_name,
                                  photo_col_name = "Photo_ID_rel", spines_col_name,
                                  properties_col_name = "length", x_lim = c(0, 2),
-                                 strat = paste0(animal_col_name, ":group"), mixed = TRUE, ...){
+                                 strat = paste0(animal_col_name, ":group"), mixed = TRUE,
+                                 fig_width_animals = 15, fig_heigth_animals = 15, fig_width = 10,
+                                 fig_heigth = 7, ...){
   stopifnot(is.character(folder_path), is.character(file_path), is.character(animal_col_name),
             length(animal_col_name) == 1, is.character(group_col_name),
             length(group_col_name) == 1, is.character(photo_col_name),
             length(photo_col_name) == 1, is.character(spines_col_name),
             length(spines_col_name) == 1, is.character(properties_col_name),
             length(properties_col_name) > 0, is.numeric(x_lim), length(x_lim) == 2,
-            is.character(strat), is.logical(mixed))
+            is.character(strat), is.logical(mixed), is.numeric(fig_width_animals),
+            is.numeric(fig_heigth_animals), is.numeric(fig_width), is.numeric(fig_heigth))
 
   #checking if file and folder exists
   if(!file.exists(folder_path)){
@@ -138,17 +147,22 @@ generate_raport_file <- function(folder_path, file_path, animal_col_name, group_
     element_1 <- paste0("plot_distributions(spines, property = \"", col_analysis[i], "\", ecdf = TRUE, ",
                         "x_lim = c(", x_lim[1], ", ", x_lim[2], "))")
     element_2 <- paste0("plot_distributions(spines, property = \"", col_analysis[i], "\", ecdf = FALSE, ",
-                        "x_lim = c(", x_lim[1], ", ", x_lim[2], "))\n")
+                        "x_lim = c(", x_lim[1], ", ", x_lim[2], "))")
     element_3 <- paste0("plot_animals(spines, property = \"", col_analysis[i], "\", box = FALSE", ")")
-    element_4 <- paste0("plot_animals(spines, property = \"", col_analysis[i], "\", box = TRUE", ")\n")
+    element_4 <- paste0("plot_animals(spines, property = \"", col_analysis[i], "\", box = TRUE", ")")
     element_5 <- paste0("plot_crossed_effects(spines, property = \"", col_analysis[i], "\", ",
                         "strat = \"", strat, "\", mixed = ", mixed, ")\n")
     element_6 <- paste0("(ms <- model_spines(spines, property = \"", col_analysis[i], "\", strat = \"",
                         strat, "\", photo_col_name = \"", col_names[nr_col_analysis[1] - 2], "\"))")
     element_7 <- "diffogram(ms)"
 
-    r_sequence <- c("```{r}", element_1, element_2, element_3, element_4, element_5,
-                    element_6, element_7,"```\n")
+    r_sequence <- c(paste0("```{r, fig.align='center', fig.width=", fig_width, ", fig.height=",
+                    fig_heigth, "}"), element_1, element_2, "```\n",
+                    paste0("```{r, fig.align='center', fig.width=", fig_width_animals, ", fig.height=",
+                    fig_heigth_animals, "}"), element_3, element_4, "```\n",
+                    paste0("```{r, fig.align='center', fig.width=", fig_width, ", fig.height=",
+                    fig_heigth, "}"), element_5, element_6, element_7, "```\n")
+
     for(j in seq_len(length(r_sequence))){
       writeLines(r_sequence[j], con)
     }
