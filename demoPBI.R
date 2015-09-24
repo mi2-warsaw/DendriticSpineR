@@ -122,3 +122,17 @@ generate_raport_file(folder_path = getwd(), file_path = file, animal_col_name = 
 
 render_raport(file_path = paste0("raport-", Sys.Date(), ".Rmd"),
                                  destination_path = paste0("raport-", Sys.Date(), ".html"))
+
+
+
+##
+## 11. Generating raport file and rendering it at ones
+##
+
+make_raport(folder_path = getwd(), file_path = file, animal_col_name = animal_col_name,
+            group_col_name = group_col_name,
+            spines_col_name = spines_col_name,
+            photo_col_name = photo_col_name,
+            properties_col_name = properties_col_name,
+            strat = "Animal", mixed = FALSE,
+            header = TRUE, sep = ";")
